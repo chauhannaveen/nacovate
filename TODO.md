@@ -4,6 +4,7 @@ Live site: [nacovate.com](https://nacovate.com) · Repo: [chauhannaveen/nacovate
 
 ## Pending
 
+- [ ] **Logo decision** — pick a concept from [design/logo-concepts.html](design/logo-concepts.html) (A Keystone / B Node N / C Diamond-O), then integrate into site header + favicon, build the 1200×630 og:image from it, and export PNGs for WhatsApp Business + Google Workspace avatar.
 - [ ] **Booking link** — create a Google Calendar *Appointment schedule* (included in Google Workspace: Calendar → Create → Appointment schedule), then point both "Book a quick call" buttons at the booking-page URL. Currently they open a pre-filled email.
 - [ ] **Real contact-form backend** — replace the mailto-based form with a silent submit endpoint (free options: Google Apps Script web app tied to Workspace, or a Cloudflare Worker). Submissions should land in the team@nacovate.com inbox or a Google Sheet.
 - [ ] **Real testimonials** — the three reviews in the Clients section are AI-written samples (marked with a `// sample reviews` note). Replace with real client quotes as they come in, then remove the note.
