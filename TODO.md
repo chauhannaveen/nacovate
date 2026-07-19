@@ -1,0 +1,19 @@
+# Nacovate site — future implementation
+
+Live site: [nacovate.com](https://nacovate.com) · Repo: [chauhannaveen/nacovate](https://github.com/chauhannaveen/nacovate) · Hosting: GitHub Pages (deploy = push to `main`)
+
+## Pending
+
+- [ ] **Booking link** — create a Google Calendar *Appointment schedule* (included in Google Workspace: Calendar → Create → Appointment schedule), then point both "Book a quick call" buttons at the booking-page URL. Currently they open a pre-filled email.
+- [ ] **Real contact-form backend** — replace the mailto-based form with a silent submit endpoint (free options: Google Apps Script web app tied to Workspace, or a Cloudflare Worker). Submissions should land in the team@nacovate.com inbox or a Google Sheet.
+- [ ] **Real testimonials** — the three reviews in the Clients section are AI-written samples (marked with a `// sample reviews` note). Replace with real client quotes as they come in, then remove the note.
+- [ ] **Products section** — replace the `[ Product name ]` placeholder card with the first real product when ready.
+- [ ] **WhatsApp Business** — move +91 96503 13207 to the WhatsApp Business app for business profile, quick replies, and auto-greetings.
+
+## Nice to have
+
+- [ ] **Analytics** — privacy-friendly visitor stats (Cloudflare Web Analytics or GoatCounter are free; GA4 if deeper funnels needed).
+- [ ] **SEO basics** — `robots.txt` + `sitemap.xml`, verify domain in Google Search Console, submit sitemap.
+- [ ] **Social preview image** — an `og:image` (1200×630) so links shared on WhatsApp/LinkedIn show a branded card.
+- [ ] **Cloudflare in front** — if performance/features warrant later: move nameservers to Cloudflare (carefully re-create Google Workspace MX/SPF/DKIM records), keep GitHub Pages as origin or migrate to Cloudflare Pages.
+- [ ] **Pricing placeholder** — decide whether to show a "starts small / from ₹X" anchor on the site.
