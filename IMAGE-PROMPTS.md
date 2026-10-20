@@ -44,7 +44,7 @@ angles or empty rooms.
 | `hero-4.jpg` | Upscale residential clubhouse interior in India, double-height ceiling, rattan and wood furniture, indoor plants, soft daylight through tall windows, no people |
 | `hero-5.jpg` | Landscaped garden podium between modern residential towers, paved walking path, young trees, benches, early morning light, no people |
 | `floorplan.jpg` | Clean architectural floor plan drawing of a 3 BHK apartment, top-down 2D, thin black lines on white, room labels, dimension lines, no colour |
-| `map.jpg` | Stylised minimal city map illustration, muted beige and sage, labelled roads and a single teal location pin, flat vector style, no photorealism |
+| `map.jpg` | Stylised minimal city map illustration, muted beige and sage, labelled roads and a single copper location pin, flat vector style, no photorealism |
 
 ## Shanti Dental Care — Faridabad (`public/demo/shanti/`)
 
@@ -130,8 +130,7 @@ Your own site has no photography and does not need any — it runs on type, colo
 whitespace, which is why it loads fast and looks deliberate. The one image worth making
 is the social preview card, already on your `TODO.md`:
 
-> `og-image.png`, 1200×630. Deep teal background `#0B7A83` fading to near-black
-> `#0B0F12`, the Nacovate mark centred-left, the words "Technology that just works" in a
+> `og-image.png`, 1200×630. Copper `#A65B23` fading into near-black `#14120E`, the Nacovate mark centred-left, the words "Technology that just works" in a
 > clean geometric sans, generous margins, no photograph, no stock imagery.
 
 Generate that one at exactly 1200×630 and save it as PNG, not JPEG — flat colour and

@@ -90,11 +90,19 @@ block and CSS under "Motion & interaction layer". Two rules worth keeping:
 - Everything is disabled under `prefers-reduced-motion: reduce`. Keep it that way.
 
 `index.html` defines CSS custom properties on `:root` with a `[data-theme=dark]` override.
-Use the tokens, never raw hex:
+Use the tokens, never raw hex.
+
+**The palette is "Ink & copper"** — warm off-white `#F7F4EF`, near-black `#17150F`, copper
+accent `#A65B23`. It replaced a teal accent in Oct 2026 for two reasons: teal is the
+default in IT services, and the old `#0B7A83` sat only ΔE 11.4 from the Westbrook clinic
+demo — the brand wore its own clients' colour. Copper's nearest demo is ΔE 25.4. Any
+future accent change should be checked the same way: perceptual distance against every
+demo palette, not hue angle, which is misleading. Options considered are preserved in
+[design/palettes.html](design/palettes.html).
 
 ```
 --bg --surface --ink --muted --faint --border --border-strong
---signal (#0B7A83 light / #37C4CD dark) --signal-ink --signal-soft --on-signal
+--signal (#A65B23 light / #D98A48 dark) --signal-ink --signal-soft --on-signal
 --shadow --shadow-lift --glow --radius --radius-sm --maxw --pad
 --serif (Archivo) --sans (IBM Plex Sans) --mono (IBM Plex Mono)
 ```
@@ -106,7 +114,7 @@ Reusable classes already exist — `wrap`, `section-head`, `eyebrow`, `cards`, `
 single new rule.
 
 The Next project mirrors the dark-theme tokens in `tailwind.config.ts` under `ink` and
-`ember`. If the brand teal changes here, change it there too or the generated pages
+`ember`. If the brand copper changes here, change it there too or the generated pages
 drift out of brand.
 
 Archivo is embedded in `index.html` as base64 `@font-face`. That is why the file is

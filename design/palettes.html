@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nacovate — palette options</title>
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#17181b;color:#e8eaed;
+    font:16px/1.6 'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;}
+  .page{max-width:1180px;margin:0 auto;padding:3rem 1.25rem 5rem;}
+  h1{font:600 2rem/1.15 ui-serif,Georgia,serif;letter-spacing:-.02em;margin:0 0 .6rem;}
+  .lede{color:#9aa3ad;max-width:46rem;margin:0 0 2.5rem;}
+  .opt{margin-bottom:3.25rem;border:1px solid #2a2d33;border-radius:14px;overflow:hidden;background:#1c1e22;}
+  .opt-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.75rem;padding:1rem 1.25rem;
+    border-bottom:1px solid #2a2d33;}
+  .opt-head h2{font:600 1.1rem/1.2 ui-serif,Georgia,serif;margin:0;}
+  .badge{font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;
+    padding:.35rem .5rem;border-radius:4px;background:#2a2d33;color:#9aa3ad;}
+  .badge.rec{background:#1f3d2f;color:#7ee2a8;}
+  .badge.now{background:#3a3222;color:#e8c37a;}
+  .note{padding:0 1.25rem 1.1rem;color:#9aa3ad;font-size:.9rem;max-width:62rem;}
+  .swatches{display:flex;flex-wrap:wrap;gap:.4rem;padding:0 1.25rem 1.1rem;}
+  .sw{display:flex;align-items:center;gap:.45rem;font:500 11px/1 ui-monospace,monospace;
+    color:#9aa3ad;background:#24272c;border-radius:5px;padding:.35rem .5rem;}
+  .sw i{width:13px;height:13px;border-radius:3px;display:block;border:1px solid rgba(255,255,255,.14);}
+
+  /* The specimen: same markup every time, only the custom properties change. */
+  .demo{padding:1.25rem;background:#121316;}
+  .frame{border-radius:12px;overflow:hidden;background:var(--bg);color:var(--ink);
+    font-family:var(--sans);}
+  .bar{display:flex;align-items:center;gap:.4rem;padding:.6rem .8rem;background:var(--surface);
+    border-bottom:1px solid var(--border);}
+  .bar i{width:9px;height:9px;border-radius:50%;background:var(--border);display:block;}
+  .bar span{margin-left:.5rem;font:500 10px/1 ui-monospace,monospace;color:var(--faint);}
+  .body{padding:2rem 1.75rem 2.25rem;}
+  .eyebrow{font:600 10px/1 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--signal);margin:0 0 1rem;}
+  .h{font:600 2rem/1.1 var(--serif);letter-spacing:-.02em;margin:0 0 .75rem;max-width:20ch;}
+  .h em{font-style:normal;color:var(--signal);}
+  .p{color:var(--muted);max-width:46ch;margin:0 0 1.5rem;font-size:.95rem;}
+  .row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:1.75rem;}
+  .btn{background:var(--signal);color:var(--on-signal);border-radius:9px;padding:.75rem 1.25rem;
+    font-weight:600;font-size:.88rem;text-decoration:none;display:inline-block;}
+  .btn2{border:1px solid var(--border-strong);color:var(--ink);border-radius:9px;
+    padding:.75rem 1.25rem;font-weight:600;font-size:.88rem;text-decoration:none;}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;}
+  @media(max-width:620px){.cards{grid-template-columns:1fr;}}
+  .c{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.9rem;}
+  .c i{display:block;width:26px;height:26px;border-radius:7px;background:var(--signal-soft);
+    margin-bottom:.6rem;}
+  .c b{display:block;font-size:.85rem;margin-bottom:.2rem;}
+  .c span{display:block;font-size:.76rem;color:var(--muted);line-height:1.45;}
+  .pill{margin-left:auto;font:600 10px/1 ui-monospace,monospace;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--signal);background:var(--signal-soft);
+    padding:.4rem .55rem;border-radius:99px;}
+
+  /* ---- A · current ---- */
+  .pA{--bg:#F1F4F4;--surface:#FBFCFC;--ink:#0E1417;--muted:#51646A;--faint:#7B9096;
+      --border:#D7DFDF;--border-strong:#C4CFCF;--signal:#0B7A83;--signal-soft:#E2EFEF;
+      --on-signal:#fff;--serif:ui-serif,Georgia,serif;--sans:'IBM Plex Sans',system-ui,sans-serif;}
+  /* ---- B · ink + copper ---- */
+  .pB{--bg:#F7F4EF;--surface:#FFFDFA;--ink:#17150F;--muted:#5E574B;--faint:#8B8376;
+      --border:#E3DCD0;--border-strong:#D2C8B8;--signal:#A65B23;--signal-soft:#F3E7DA;
+      --on-signal:#fff;--serif:ui-serif,Georgia,serif;--sans:'IBM Plex Sans',system-ui,sans-serif;}
+  /* ---- C · forest + brass ---- */
+  .pC{--bg:#F4F2EC;--surface:#FCFBF7;--ink:#131A16;--muted:#4F5C54;--faint:#7D8A82;
+      --border:#DCDED4;--border-strong:#C8CCC0;--signal:#1F4D3D;--signal-soft:#E2EAE3;
+      --on-signal:#fff;--serif:ui-serif,Georgia,serif;--sans:'IBM Plex Sans',system-ui,sans-serif;}
+  /* ---- D · graphite + terracotta ---- */
+  .pD{--bg:#F6F5F3;--surface:#FFFFFF;--ink:#141414;--muted:#55534F;--faint:#88847E;
+      --border:#E2DFDA;--border-strong:#CFCAC3;--signal:#B23F2C;--signal-soft:#F7E6E2;
+      --on-signal:#fff;--serif:ui-serif,Georgia,serif;--sans:'IBM Plex Sans',system-ui,sans-serif;}
+
+  .dark .frame{--bg:#0B0F12;--surface:#131A1D;--ink:#EAF1F1;--muted:#9EAFB1;--faint:#6D8286;
+    --border:#212D31;--border-strong:#2E3D41;}
+  .dark.pA .frame{--signal:#37C4CD;--signal-soft:#112A2E;--on-signal:#04191B;}
+  .dark.pB .frame{--bg:#14120E;--surface:#1D1A14;--border:#2E2920;--border-strong:#3D362A;
+    --ink:#F2EDE4;--muted:#A79E90;--signal:#D98A48;--signal-soft:#2B2017;--on-signal:#17150F;}
+  .dark.pC .frame{--bg:#0C120F;--surface:#141C18;--border:#223029;--border-strong:#2E3F36;
+    --ink:#E9F0EB;--muted:#9BAEA3;--signal:#5FBF91;--signal-soft:#15241C;--on-signal:#0B1711;}
+  .dark.pD .frame{--bg:#101010;--surface:#191817;--border:#2A2826;--border-strong:#393633;
+    --ink:#F2F0ED;--muted:#A6A19A;--signal:#E0674F;--signal-soft:#2A1A16;--on-signal:#17100E;}
+
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media(max-width:900px){.pair{grid-template-columns:1fr;}}
+  .cap{font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;
+    color:#6e757e;margin:0 0 .5rem;}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Nacovate — palette options</h1>
+  <p class="lede">The same block of the homepage, rendered in four palettes, light and dark.
+  Nothing here is committed to the live site — this is a working file for picking a direction,
+  like <a href="logo-concepts.html" style="color:#7ee2a8">logo-concepts.html</a>. Look at these on
+  a phone too.</p>
+
+  <!-- A -->
+  <section class="opt">
+    <div class="opt-head">
+      <h2>A · Teal on cool grey</h2>
+      <span class="badge">Former — until Oct 2026</span>
+      <span class="badge">#0B7A83</span>
+    </div>
+    <p class="note">What the site runs now. Reads clean and trustworthy, passes contrast
+    comfortably. Two problems: it is the single most common accent in IT services, and it sits
+    7.6° of hue from the Westbrook clinic demo and 19.5° from Shanti Dental — so the brand wears
+    the same colour as the clients it is pitching to.</p>
+    <div class="swatches">
+      <span class="sw"><i style="background:#0B7A83"></i>#0B7A83 signal</span>
+      <span class="sw"><i style="background:#F1F4F4"></i>#F1F4F4 bg</span>
+      <span class="sw"><i style="background:#0E1417"></i>#0E1417 ink</span>
+      <span class="sw"><i style="background:#51646A"></i>#51646A muted</span>
+    </div>
+    <div class="demo"><div class="pair">
+      <div><p class="cap">Light</p><div class="pA"><div class="frame" id="fA"></div></div></div>
+      <div><p class="cap">Dark</p><div class="pA dark"><div class="frame"></div></div></div>
+    </div></div>
+  </section>
+
+  <!-- B -->
+  <section class="opt">
+    <div class="opt-head">
+      <h2>B · Ink &amp; copper</h2>
+      <span class="badge rec">Shipped</span>
+      <span class="badge">#A65B23</span>
+    </div>
+    <p class="note">Warm off-white instead of cool grey, near-black with a brown undertone, and a
+    copper accent. Copper is rare in IT services, warm enough not to feel corporate, and it clashes
+    with none of the eight demos. The warm paper tone is most of what reads as "premium" here —
+    cool grey is the colour of a 2014 corporate template.</p>
+    <div class="swatches">
+      <span class="sw"><i style="background:#A65B23"></i>#A65B23 signal</span>
+      <span class="sw"><i style="background:#F7F4EF"></i>#F7F4EF bg</span>
+      <span class="sw"><i style="background:#17150F"></i>#17150F ink</span>
+      <span class="sw"><i style="background:#5E574B"></i>#5E574B muted</span>
+    </div>
+    <div class="demo"><div class="pair">
+      <div><p class="cap">Light</p><div class="pB"><div class="frame"></div></div></div>
+      <div><p class="cap">Dark</p><div class="pB dark"><div class="frame"></div></div></div>
+    </div></div>
+  </section>
+
+  <!-- C -->
+  <section class="opt">
+    <div class="opt-head">
+      <h2>C · Forest &amp; bone</h2>
+      <span class="badge">#1F4D3D</span>
+    </div>
+    <p class="note">Deep green on a bone background. The most obviously expensive of the four and
+    the most formal — it reads law firm, wealth management, consultancy. Strong if you want to look
+    senior and are willing to look a little serious. Possibly too buttoned-up for a workshop owner
+    in Faridabad.</p>
+    <div class="swatches">
+      <span class="sw"><i style="background:#1F4D3D"></i>#1F4D3D signal</span>
+      <span class="sw"><i style="background:#F4F2EC"></i>#F4F2EC bg</span>
+      <span class="sw"><i style="background:#131A16"></i>#131A16 ink</span>
+      <span class="sw"><i style="background:#4F5C54"></i>#4F5C54 muted</span>
+    </div>
+    <div class="demo"><div class="pair">
+      <div><p class="cap">Light</p><div class="pC"><div class="frame"></div></div></div>
+      <div><p class="cap">Dark</p><div class="pC dark"><div class="frame"></div></div></div>
+    </div></div>
+  </section>
+
+  <!-- D -->
+  <section class="opt">
+    <div class="opt-head">
+      <h2>D · Graphite &amp; terracotta</h2>
+      <span class="badge">#B23F2C</span>
+    </div>
+    <p class="note">Near-neutral base with a burnt red accent. The most confident and the most
+    editorial — it looks like a design studio rather than an IT firm. Highest risk: red carries
+    urgency and error signalling, so it needs discipline, and it is one hue family away from the
+    Everest school demo.</p>
+    <div class="swatches">
+      <span class="sw"><i style="background:#B23F2C"></i>#B23F2C signal</span>
+      <span class="sw"><i style="background:#F6F5F3"></i>#F6F5F3 bg</span>
+      <span class="sw"><i style="background:#141414"></i>#141414 ink</span>
+      <span class="sw"><i style="background:#55534F"></i>#55534F muted</span>
+    </div>
+    <div class="demo"><div class="pair">
+      <div><p class="cap">Light</p><div class="pD"><div class="frame"></div></div></div>
+      <div><p class="cap">Dark</p><div class="pD dark"><div class="frame"></div></div></div>
+    </div></div>
+  </section>
+</div>
+
+<script>
+// One specimen, cloned into every frame, so the only difference between options is colour.
+var SPECIMEN = [
+  '<div class="bar"><i></i><i></i><i></i><span>nacovate.com</span></div>',
+  '<div class="body">',
+  '<p class="eyebrow">Independent IT consulting</p>',
+  '<h1 class="h">Technology that <em>just works.</em></h1>',
+  '<p class="p">A hands-on IT partner for small businesses without an in-house tech team ',
+  '&mdash; websites, support and automation, explained in plain language.</p>',
+  '<div class="row"><a class="btn" href="#">Book a quick call</a>',
+  '<a class="btn2" href="#">See how we work</a><span class="pill">8 demos</span></div>',
+  '<div class="cards">',
+  '<div class="c"><i></i><b>Websites</b><span>Found online, enquiries captured</span></div>',
+  '<div class="c"><i></i><b>IT support</b><span>Help without a full-time hire</span></div>',
+  '<div class="c"><i></i><b>Automation</b><span>Cut the repetitive busywork</span></div>',
+  '</div></div>'
+].join('');
+document.querySelectorAll('.frame').forEach(function(f){ f.innerHTML = SPECIMEN; });
+</script>
+</body>
+</html>
