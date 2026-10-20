@@ -384,8 +384,7 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 @media (min-width:720px){.work-grid{grid-template-columns:1fr 1fr;}}
 @media (min-width:1040px){
   .work-grid{grid-template-columns:repeat(6,1fr);}
-  /* First two span three columns each, the last three span two: a 2-up row above a
-     3-up row, which keeps five cards from leaving an orphan. */
+  /* Two feature cards over two rows of three: eight cards, no orphan. */
   .work-grid>.work:nth-child(1),.work-grid>.work:nth-child(2){grid-column:span 3;}
   .work-grid>.work:nth-child(n+3){grid-column:span 2;}
 }
@@ -435,10 +434,183 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 .prod-specs b{font:600 1.3rem/1 var(--serif);color:var(--ink);}
 .prod-specs span{font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);}
 .prod-stack{display:block;font:500 .74rem/1.7 var(--mono);color:var(--faint);margin-bottom:1rem;}
+
+/* ===== Motion & interaction layer ======================================== */
+
+/* Reading-progress bar */
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:200;
+  background:linear-gradient(90deg,var(--signal),var(--signal-ink));
+  transform:scaleX(0);transform-origin:0 50%;will-change:transform;}
+
+/* Hero aurora — three slow-drifting blobs behind the fold. */
+/* No filter:blur() here on purpose. A 60px blur over a viewport-sized box forces the
+   whole hero subtree onto a composited layer -- it rendered blank in capture and costs
+   real frames on low-end phones. The radial gradients below are already soft. */
+.aurora{position:absolute;inset:-20% -10% auto -10%;height:140%;pointer-events:none;z-index:0;
+  opacity:.55;}
+.aurora span{position:absolute;display:block;border-radius:50%;}
+.aurora .a1{width:46vw;height:46vw;left:-6%;top:-10%;background:radial-gradient(circle,color-mix(in srgb,var(--signal) 45%,transparent) 0%,transparent 62%);
+  animation:drift1 26s ease-in-out infinite alternate;}
+.aurora .a2{width:38vw;height:38vw;right:2%;top:4%;background:radial-gradient(circle,rgba(111,123,212,.40) 0%,transparent 62%);
+  opacity:.75;animation:drift2 32s ease-in-out infinite alternate;}
+.aurora .a3{width:30vw;height:30vw;left:38%;top:36%;background:radial-gradient(circle,rgba(43,182,168,.36) 0%,transparent 64%);
+  opacity:.6;animation:drift3 24s ease-in-out infinite alternate;}
+:root[data-theme="dark"] .aurora{opacity:.42;}
+@keyframes drift1{to{transform:translate3d(8%,6%,0) scale(1.15);}}
+@keyframes drift2{to{transform:translate3d(-9%,10%,0) scale(1.1);}}
+@keyframes drift3{to{transform:translate3d(6%,-8%,0) scale(1.2);}}
+.hero-inner{position:relative;z-index:1;}
+
+/* Animated sheen across the accent words */
+.accent{background:linear-gradient(100deg,var(--signal) 0%,var(--signal) 38%,var(--signal-ink) 50%,var(--signal) 62%,var(--signal) 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:sheen 7s ease-in-out infinite;}
+@keyframes sheen{0%,100%{background-position:120% 0;}50%{background-position:-20% 0;}}
+
+/* Staggered hero entrance */
+.hero-inner>.reveal{transition-delay:calc(var(--d,0)*55ms);}
+
+/* Cursor spotlight on cards */
+.card,.work,.proof,.step{position:relative;isolation:isolate;}
+.card::before,.work::before,.proof::before,.step::before{content:"";position:absolute;inset:0;z-index:-1;
+  border-radius:inherit;opacity:0;transition:opacity .25s ease;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),var(--glow),transparent 70%);}
+.card:hover::before,.work:hover::before,.proof:hover::before,.step:hover::before{opacity:1;}
+.card{transition:border-color .2s ease,transform .25s ease,box-shadow .25s ease;}
+.card:hover{transform:translateY(-3px);border-color:var(--signal);box-shadow:var(--shadow-lift);}
+
+/* Count-up figures */
+.prod-specs b{font-variant-numeric:tabular-nums;}
+
+/* Steps: a line that draws itself as you scroll */
+.steps{position:relative;}
+@media (min-width:860px){
+  .steps::before{content:"";position:absolute;left:0;right:0;top:2.1rem;height:2px;
+    background:var(--border);z-index:0;}
+  .steps::after{content:"";position:absolute;left:0;top:2.1rem;height:2px;width:0;
+    background:linear-gradient(90deg,var(--signal),var(--signal-ink));z-index:1;
+    transition:width 1.4s cubic-bezier(.2,.7,.2,1);}
+  .steps.drawn::after{width:100%;}
+  .step{background:var(--bg);}
+}
+
+/* Sector marquee */
+.marquee{position:relative;overflow:hidden;border-block:1px solid var(--border);
+  background:var(--surface);padding:.85rem 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
+.marquee-track{display:flex;gap:2.6rem;width:max-content;animation:slide 38s linear infinite;}
+.marquee:hover .marquee-track{animation-play-state:paused;}
+.marquee span{display:inline-flex;align-items:center;gap:.6rem;white-space:nowrap;
+  font:600 .82rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+.marquee span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--signal);opacity:.6;}
+@keyframes slide{to{transform:translateX(-50%);}}
+
+/* Shine sweep on primary buttons */
+.btn{position:relative;overflow:hidden;}
+.btn::after{content:"";position:absolute;top:0;left:-120%;width:45%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-18deg);transition:left .6s ease;}
+.btn:hover::after{left:140%;}
+
+/* Work card animated preview */
+.work-shot svg{transition:transform .45s cubic-bezier(.2,.7,.2,1);}
+.work:hover .work-shot svg{transform:scale(1.08) translateY(-2px);}
+.work-shot .scan{position:absolute;left:0;right:0;top:0;height:28%;opacity:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);
+  transition:opacity .3s ease;}
+.work:hover .work-shot .scan{opacity:1;animation:scan 2.4s ease-in-out infinite;}
+@keyframes scan{0%{transform:translateY(-30%);}50%{transform:translateY(300%);}100%{transform:translateY(-30%);}}
+
+/* ===== Before / after comparison ======================================== */
+.compare-wrap{position:relative;border-radius:var(--radius);overflow:hidden;
+  border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow);
+  aspect-ratio:16/10;max-height:30rem;}
+@media (max-width:640px){.compare-wrap{aspect-ratio:4/5;max-height:none;}}
+.pane{position:absolute;inset:0;overflow:hidden;}
+.pane-after{clip-path:inset(0 0 0 var(--split,50%));}
+.pane-before{clip-path:inset(0 calc(100% - var(--split,50%)) 0 0);}
+.mock{position:absolute;inset:0;display:flex;flex-direction:column;}
+.mock-bar{display:flex;align-items:center;gap:.4rem;padding:.55rem .75rem;border-bottom:1px solid;flex:none;}
+.mock-bar i{width:9px;height:9px;border-radius:50%;display:block;}
+.mock-url{margin-left:.5rem;font:500 10px/1 var(--mono);padding:.25rem .5rem;border-radius:4px;}
+.mock-body{flex:1;padding:1rem 1.1rem;overflow:hidden;}
+.m-old{background:#e9e9e4;color:#222;font-family:'Times New Roman',Times,serif;}
+.m-old .mock-bar{background:#d7d7d0;border-color:#bdbdb4;}
+.m-old .mock-url{background:#fff;color:#555;border:1px solid #bbb;}
+.m-old h4{font-size:1.25rem;margin:0 0 .2rem;color:#0b2f6b;text-decoration:underline;}
+.m-old .tagline{font-size:.62rem;color:#666;margin:0 0 .7rem;}
+.m-old .row{display:flex;gap:.6rem;}
+.m-old .side{width:28%;background:#dcdcd4;border:1px solid #c3c3bb;padding:.4rem;}
+.m-old .side li{font-size:.58rem;color:#0b2f6b;text-decoration:underline;list-style:none;margin-bottom:.3rem;}
+.m-old .main{flex:1;}
+.m-old p{font-size:.58rem;line-height:1.35;margin:0 0 .35rem;color:#333;}
+.m-old .hit{margin-top:.5rem;font-size:.55rem;color:#777;border-top:1px dashed #b5b5ad;padding-top:.35rem;}
+.m-old .blink{color:#c00;font-weight:700;}
+.m-new{background:#fbfcfc;color:#0e1417;}
+.m-new .mock-bar{background:#f1f4f4;border-color:#e2e8e8;}
+.m-new .mock-url{background:#fff;color:#51646a;border:1px solid #e2e8e8;}
+.m-new .nav{display:flex;align-items:center;gap:.5rem;margin-bottom:.85rem;}
+.m-new .logo{width:16px;height:16px;border-radius:5px;background:#0B7A83;}
+.m-new .nav b{font-size:.62rem;}
+.m-new .nav .pill{margin-left:auto;background:#0B7A83;color:#fff;font-size:.52rem;
+  padding:.24rem .5rem;border-radius:99px;}
+.m-new h4{font:600 1.05rem/1.2 var(--serif);margin:0 0 .35rem;letter-spacing:-.01em;}
+.m-new p{font-size:.58rem;line-height:1.5;color:#51646a;margin:0 0 .7rem;}
+.m-new .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;}
+.m-new .c{background:#fff;border:1px solid #e2e8e8;border-radius:7px;padding:.45rem;}
+.m-new .c i{display:block;width:14px;height:14px;border-radius:4px;background:#E2EFEF;margin-bottom:.3rem;}
+.m-new .c b{display:block;font-size:.52rem;margin-bottom:.15rem;}
+.m-new .c span{display:block;font-size:.46rem;color:#7B9096;line-height:1.3;}
+.m-new .cta{margin-top:.6rem;display:inline-block;background:#0B7A83;color:#fff;
+  font-size:.54rem;font-weight:600;padding:.35rem .7rem;border-radius:6px;}
+.compare-handle{position:absolute;top:0;bottom:0;left:var(--split,50%);width:2px;
+  background:var(--signal);transform:translateX(-1px);z-index:4;pointer-events:none;}
+.compare-handle::after{content:"";position:absolute;top:50%;left:50%;width:40px;height:40px;
+  transform:translate(-50%,-50%);border-radius:50%;background:var(--signal);
+  box-shadow:0 2px 12px rgba(0,0,0,.28);}
+.compare-handle svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:5;color:var(--on-signal);width:20px;height:20px;}
+.compare-range{position:absolute;inset:0;z-index:6;width:100%;height:100%;opacity:0;
+  cursor:ew-resize;margin:0;-webkit-appearance:none;appearance:none;background:transparent;}
+.compare-range:focus-visible~.compare-handle::after{outline:3px solid var(--ink);outline-offset:3px;}
+.compare-tag{position:absolute;top:.7rem;z-index:3;font:600 9px/1 var(--mono);letter-spacing:.1em;
+  text-transform:uppercase;padding:.34rem .5rem;border-radius:4px;background:rgba(0,0,0,.55);color:#fff;}
+.tag-l{left:.7rem;} .tag-r{right:.7rem;}
+.compare-hint{margin-top:.9rem;font-size:.82rem;color:var(--faint);text-align:center;}
+
+@media (prefers-reduced-motion: reduce){
+  .aurora span,.accent,.marquee-track{animation:none !important;}
+  .accent{background:none;color:var(--signal);}
+  .btn::after{display:none;}
+  .steps::after{transition:none;}
+  .work:hover .work-shot .scan{animation:none;}
+}
+
+.m-new .new-cols{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;align-items:start;}
+@media (max-width:640px){.m-new .new-cols{grid-template-columns:1fr;}.m-new .widget{display:none;}}
+.m-new .widget{background:#fff;border:1px solid #e2e8e8;border-radius:9px;padding:.6rem;
+  box-shadow:0 10px 24px -18px rgba(14,20,23,.5);}
+.m-new .w-head{display:flex;align-items:center;justify-content:space-between;gap:.4rem;margin-bottom:.5rem;}
+.m-new .w-head b{font-size:.56rem;}
+.m-new .w-live{font-size:.44rem;background:#E7F6EC;color:#1b6b3a;padding:.18rem .34rem;border-radius:99px;}
+.m-new .w-days,.m-new .w-slots{display:flex;gap:.25rem;margin-bottom:.4rem;}
+.m-new .w-slots{flex-wrap:wrap;}
+.m-new .w-days i,.m-new .w-slots i{font-style:normal;font-size:.46rem;border:1px solid #e2e8e8;
+  border-radius:5px;padding:.26rem .34rem;color:#51646a;flex:1;text-align:center;}
+.m-new .w-slots i{flex:0 0 auto;min-width:2.1rem;}
+.m-new .w-days i.on,.m-new .w-slots i.on{background:#0B7A83;border-color:#0B7A83;color:#fff;font-weight:600;}
+.m-new .w-cta{display:block;text-align:center;background:#0B7A83;color:#fff;font-size:.5rem;
+  font-weight:600;padding:.36rem;border-radius:6px;}
+.m-new .w-note{display:block;text-align:center;font-size:.42rem;color:#7B9096;margin-top:.3rem;}
+.shot-f{background:linear-gradient(135deg,#5a646b,#12171a);}
+.shot-g{background:linear-gradient(135deg,#8c2f39,#2e0e12);}
+.shot-h{background:linear-gradient(135deg,#4a6076,#141c25);}
 </style>
 </head>
 <body>
 
+<div class="progress" id="progress" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="site-header" id="top">
@@ -469,22 +641,113 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 
   <!-- HERO -->
   <section class="hero">
+    <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
     <div class="wrap hero-inner">
-      <span class="status reveal"><span class="dot" aria-hidden="true"></span> Available for new projects</span>
-      <p class="eyebrow reveal" style="margin-bottom:1.3rem;">Independent IT consulting</p>
-      <h1 class="reveal">Technology that <span class="accent">just works.</span></h1>
-      <p class="sub reveal">Nacovate is a hands-on IT partner for small businesses without an in-house tech team. Websites, support, and smart automation &mdash; explained in plain language, delivered by a small team of senior IT professionals you can reach directly.</p>
-      <div class="hero-actions reveal">
+      <span class="status reveal" style="--d:0;"><span class="dot" aria-hidden="true"></span> Available for new projects</span>
+      <p class="eyebrow reveal" style="margin-bottom:1.3rem;" style="--d:1;">Independent IT consulting</p>
+      <h1 class="reveal" style="--d:2;">Technology that <span class="accent">just works.</span></h1>
+      <p class="sub reveal" style="--d:3;">Nacovate is a hands-on IT partner for small businesses without an in-house tech team. Websites, support, and smart automation &mdash; explained in plain language, delivered by a small team of senior IT professionals you can reach directly.</p>
+      <div class="hero-actions reveal" style="--d:4;">
         <a class="btn btn--lg" href="#contact">Book a quick call
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
         <a class="btn btn--ghost btn--lg" href="#how">See how we work</a>
       </div>
-      <div class="trust-row reveal">
+      <div class="trust-row reveal" style="--d:5;">
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> No long contracts</span>
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Start with a small fixed-scope project</span>
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Direct access to the team</span>
       </div>
+    </div>
+  </section>
+
+  <!-- SECTOR MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Clinics</span><span>Dental practices</span><span>Real estate</span><span>Schools</span>
+      <span>Fabrication &amp; steel</span><span>Gyms &amp; studios</span><span>Professional services</span>
+      <span>Trades &amp; local business</span><span>Manufacturing</span><span>Property consultants</span>
+      <span>Clinics</span><span>Dental practices</span><span>Real estate</span><span>Schools</span>
+      <span>Fabrication &amp; steel</span><span>Gyms &amp; studios</span><span>Professional services</span>
+      <span>Trades &amp; local business</span><span>Manufacturing</span><span>Property consultants</span>
+    </div>
+  </div>
+
+  <!-- BEFORE / AFTER -->
+  <section id="replace">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">The difference</p>
+        <h2>Drag the line. That&rsquo;s the whole pitch.</h2>
+        <p>On the left is the site most small businesses are still running &mdash; built once, years ago, and quietly costing them enquiries ever since. On the right is what we replace it with. Nothing here is a stock template; both sides are drawn in code on this page.</p>
+      </div>
+
+      <div class="compare-wrap reveal" id="compare" style="--split:50%;">
+        <!-- dated -->
+        <div class="pane pane-before">
+          <div class="mock m-old">
+            <div class="mock-bar"><i style="background:#b9b9b1"></i><i style="background:#b9b9b1"></i><i style="background:#b9b9b1"></i>
+              <span class="mock-url">http://www.yourbusiness.co.in/index.html</span></div>
+            <div class="mock-body">
+              <h4>WELCOME TO OUR WEBSITE!!</h4>
+              <p class="tagline">Quality Service Since Many Years &bull; Best in Business</p>
+              <div class="row">
+                <div class="side">
+                  <li>Home</li><li>About Us</li><li>Our Services</li><li>Gallery</li><li>Contact Us</li><li>Enquiry</li>
+                </div>
+                <div class="main">
+                  <p>We are a leading provider of quality services to our valued customers. Our company has been serving clients with dedication and commitment towards excellence in all spheres of our operations.</p>
+                  <p>For any enquiry kindly contact us on the below mentioned phone number during office hours. We will revert back at the earliest possible.</p>
+                  <p>Phone: 0129-XXXXXXX &nbsp; Fax: 0129-XXXXXXX</p>
+                  <p class="hit">You are visitor number <span class="blink">000417</span> &bull; Best viewed in 1024&times;768 &bull; Last updated 2014</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ours -->
+        <div class="pane pane-after">
+          <div class="mock m-new">
+            <div class="mock-bar"><i style="background:#e2e8e8"></i><i style="background:#e2e8e8"></i><i style="background:#e2e8e8"></i>
+              <span class="mock-url">https://yourbusiness.in</span></div>
+            <div class="mock-body">
+              <div class="nav"><span class="logo"></span><b>Your Business</b><span class="pill">Book now</span></div>
+              <!-- Two columns on purpose: with the handle parked at 50% the right half
+                   must carry something worth looking at, or the "after" reads as empty. -->
+              <div class="new-cols">
+                <div>
+                  <h4>Booked in under a minute, from a phone.</h4>
+                  <p>Clear service list, published prices, and one button that does the thing your customer actually came to do.</p>
+                  <div class="cards3">
+                    <div class="c"><i></i><b>Book online</b><span>Pick a slot, get a confirmation</span></div>
+                    <div class="c"><i></i><b>Prices</b><span>No call to find out</span></div>
+                    <div class="c"><i></i><b>WhatsApp</b><span>One tap to a person</span></div>
+                  </div>
+                  <span class="cta">Book an appointment</span>
+                </div>
+                <div class="widget">
+                  <div class="w-head"><b>Book an appointment</b><span class="w-live">3 slots today</span></div>
+                  <div class="w-days"><i>Mon</i><i class="on">Tue</i><i>Wed</i><i>Thu</i></div>
+                  <div class="w-slots"><i>9:15</i><i class="on">11:40</i><i>2:15</i><i>4:00</i><i>5:30</i><i>6:00</i></div>
+                  <span class="w-cta">Confirm 11:40 am</span>
+                  <span class="w-note">Confirmed by text in seconds</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <span class="compare-tag tag-l">Before</span>
+        <span class="compare-tag tag-r">After</span>
+
+        <input class="compare-range" id="compareRange" type="range" min="0" max="100" value="50" step="0.1"
+               aria-label="Reveal more of the old site or the new site">
+        <div class="compare-handle" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6-5 6 5 6M15 6l5 6-5 6"/></svg>
+        </div>
+      </div>
+      <p class="compare-hint">Drag the handle &mdash; or focus it and use the arrow keys.</p>
     </div>
   </section>
 
@@ -619,13 +882,14 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">Our work</p>
-        <h2>Five builds you can click through right now.</h2>
-        <p>Demonstration sites, built for businesses that don&rsquo;t exist, so you can judge the work rather than take our word for it. Each one solves a different job &mdash; getting booked, getting enquiries, getting people signed up. Open them on your phone; that&rsquo;s where your customers will read them.</p>
+        <h2>Eight builds you can click through right now.</h2>
+        <p>Demonstration sites, built for businesses that don&rsquo;t exist, so you can judge the work rather than take our word for it. Each solves a different job &mdash; getting booked, quoted, enrolled, leased or signed up &mdash; in India and the US. Open them on your phone; that&rsquo;s where your customers will read them.</p>
       </div>
 
       <div class="work-grid stagger">
         <a class="work reveal" href="/demos/aravali-estates/" style="--i:0;">
           <span class="work-shot shot-a" aria-hidden="true">
+            <span class="scan"></span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h20M4 21V9h5v12M11 21V4h6v17M6 12h1M6 15h1M13 8h2M13 12h2M13 16h2"/></svg>
           </span>
           <span class="work-body">
@@ -638,6 +902,7 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 
         <a class="work reveal" href="/demos/shanti-dental/" style="--i:1;">
           <span class="work-shot shot-b" aria-hidden="true">
+            <span class="scan"></span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3c-2 0-3 1.5-3 4 0 3 1 5 1.5 9 .3 2 2.5 2.2 2.8 0L10 12h4l.7 4c.3 2.2 2.5 2 2.8 0 .5-4 1.5-6 1.5-9 0-2.5-1-4-3-4-1.5 0-2 .7-4 .7S9.5 3 8 3Z"/></svg>
           </span>
           <span class="work-body">
@@ -650,6 +915,7 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 
         <a class="work reveal" href="/demos/harlow-vance-realty/" style="--i:2;">
           <span class="work-shot shot-c" aria-hidden="true">
+            <span class="scan"></span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5M5.5 10v10h13V10M10 20v-5.5h4V20"/></svg>
           </span>
           <span class="work-body">
@@ -662,6 +928,7 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 
         <a class="work reveal" href="/demos/westbrook-clinic/" style="--i:3;">
           <span class="work-shot shot-d" aria-hidden="true">
+            <span class="scan"></span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v10M7 12h10M4 4h16v16H4z"/></svg>
           </span>
           <span class="work-body">
@@ -674,6 +941,7 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 
         <a class="work reveal" href="/demos/ironside-strength/" style="--i:4;">
           <span class="work-shot shot-e" aria-hidden="true">
+            <span class="scan"></span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6M8 7v10M16 7v10M20 9v6M8 12h8"/></svg>
           </span>
           <span class="work-body">
@@ -683,6 +951,45 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
             <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </span>
         </a>
+        <a class="work reveal" href="/demos/shakti-steel/" style="--i:5;">
+          <span class="work-shot shot-f" aria-hidden="true">
+            <span class="scan"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20V9l6-4 6 4v11M9 20v-5h6v5M9 11h.01M15 11h.01"/></svg>
+          </span>
+          <span class="work-body">
+            <span class="work-tags"><span class="tag tag--india">India</span><span class="tag">Fabrication</span></span>
+            <h3>Shakti Steel &amp; Fabrication, Faridabad</h3>
+            <p>A spec table a buyer can shortlist from &mdash; every machine, envelope, material range and tolerance published &mdash; plus an RFQ form that takes a drawing instead of a vague enquiry.</p>
+            <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="/demos/everest-school/" style="--i:6;">
+          <span class="work-shot shot-g" aria-hidden="true">
+            <span class="scan"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2 9l10 5 10-5-10-5ZM6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+          </span>
+          <span class="work-body">
+            <span class="work-tags"><span class="tag tag--india">India</span><span class="tag">School</span></span>
+            <h3>Everest Public School, Faridabad</h3>
+            <p>The full CBSE fee structure on the page with a live first-year total, the admission timeline, board results and bus routes by sector. No form to fill before you see a number.</p>
+            <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="/demos/crestline-commercial/" style="--i:7;">
+          <span class="work-shot shot-h" aria-hidden="true">
+            <span class="scan"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5M8 10h2M8 13h2M14 10h2M14 13h2"/></svg>
+          </span>
+          <span class="work-body">
+            <span class="work-tags"><span class="tag tag--us">US</span><span class="tag">Commercial leasing</span></span>
+            <h3>Crestline Commercial</h3>
+            <p>A filterable availability table with size, rate, term and date for every suite &mdash; a real table on desktop, stacked cards on a phone &mdash; plus floor plates and tour booking.</p>
+            <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
       </div>
 
       <p class="meta work-note">Every business name, price, opening hour and review in these demos is invented. Each page says so at the bottom, and none of the forms send anything.</p>
@@ -903,5 +1210,133 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
   }
 })();
 </script>
+<script>
+/* motion layer — progress bar, spotlight cards, count-ups, step line, compare slider.
+   Vanilla and dependency-free on purpose: this site's whole deploy story is pushing one
+   file, and a framework would cost more than every effect here is worth. */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Reading progress ----------------------------------------------------- */
+  var bar = document.getElementById('progress');
+  if(bar){
+    var ticking = false;
+    var paint = function(){
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var p = h > 0 ? Math.min(1, window.scrollY / h) : 0;
+      bar.style.transform = 'scaleX(' + p + ')';
+      ticking = false;
+    };
+    paint();
+    window.addEventListener('scroll', function(){
+      if(!ticking){ ticking = true; window.requestAnimationFrame(paint); }
+    }, {passive:true});
+  }
+
+  /* Cursor spotlight ------------------------------------------------------ */
+  if(!reduce && window.matchMedia('(hover:hover)').matches){
+    document.addEventListener('pointermove', function(e){
+      var el = e.target.closest && e.target.closest('.card,.work,.proof,.step');
+      if(!el) return;
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, {passive:true});
+  }
+
+  /* Count-up figures ------------------------------------------------------ */
+  var nums = Array.prototype.slice.call(document.querySelectorAll('.prod-specs b'));
+  var runCount = function(el){
+    var raw = el.textContent.trim();
+    var m = raw.match(/^~?([\d.]+)(k?)$/i);
+    if(!m){ return; }
+    var target = parseFloat(m[1]);
+    var suffix = m[2] || '';
+    var prefix = raw.charAt(0) === '~' ? '~' : '';
+    var dec = (m[1].indexOf('.') > -1) ? 1 : 0;
+    var start = null, dur = 1100;
+    var step = function(ts){
+      if(start === null) start = ts;
+      var t = Math.min(1, (ts - start) / dur);
+      var eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = prefix + (target * eased).toFixed(dec) + suffix;
+      if(t < 1) window.requestAnimationFrame(step);
+      else el.textContent = raw;
+    };
+    window.requestAnimationFrame(step);
+  };
+
+  /* One observer drives both the count-ups and the step line. */
+  if(!reduce && 'IntersectionObserver' in window){
+    var once = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        if(en.target.classList.contains('steps')) en.target.classList.add('drawn');
+        else runCount(en.target);
+        once.unobserve(en.target);
+      });
+    }, {threshold:0.5});
+    nums.forEach(function(el){ once.observe(el); });
+    var steps = document.querySelector('.steps');
+    if(steps) once.observe(steps);
+  } else {
+    var st = document.querySelector('.steps');
+    if(st) st.classList.add('drawn');
+  }
+
+  /* Before / after comparison -------------------------------------------- */
+  var wrap = document.getElementById('compare');
+  var range = document.getElementById('compareRange');
+  if(wrap && range){
+    var setSplit = function(pct){
+      pct = Math.max(0, Math.min(100, pct));
+      wrap.style.setProperty('--split', pct + '%');
+    };
+    range.addEventListener('input', function(){ setSplit(parseFloat(range.value)); });
+
+    // Dragging anywhere on the image feels more natural than finding the handle.
+    var dragging = false;
+    var fromEvent = function(e){
+      var r = wrap.getBoundingClientRect();
+      var pct = ((e.clientX - r.left) / r.width) * 100;
+      range.value = pct;
+      setSplit(pct);
+    };
+    wrap.addEventListener('pointerdown', function(e){
+      dragging = true;
+      wrap.setPointerCapture && wrap.setPointerCapture(e.pointerId);
+      fromEvent(e);
+    });
+    wrap.addEventListener('pointermove', function(e){ if(dragging) fromEvent(e); });
+    ['pointerup','pointercancel','pointerleave'].forEach(function(evt){
+      wrap.addEventListener(evt, function(){ dragging = false; });
+    });
+
+    // A short nudge the first time it scrolls into view, so the control is discoverable.
+    if(!reduce && 'IntersectionObserver' in window){
+      var teased = false;
+      var tease = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(!en.isIntersecting || teased) return;
+          teased = true;
+          tease.unobserve(en.target);
+          var seq = [50, 64, 38, 50], i = 0;
+          var next = function(){
+            if(i >= seq.length) return;
+            wrap.style.transition = 'none';
+            setSplit(seq[i]);
+            range.value = seq[i];
+            i++;
+            setTimeout(next, 420);
+          };
+          setTimeout(next, 350);
+        });
+      }, {threshold:0.45});
+      tease.observe(wrap);
+    }
+  }
+})();
+</script>
+
 </body>
 </html>

@@ -89,6 +89,39 @@ Only if you decide to add a gallery here — this demo currently uses none.
 | `clinic-1.jpg` | Modern American family medicine waiting room, teal accents, comfortable chairs, natural light from large windows, plants, calm, no people |
 | `clinic-2.jpg` | Clean medical examination room, exam table with fresh paper, blood pressure cuff on the wall, bright and uncluttered, no people |
 
+
+## Shakti Steel & Fabrication — Faridabad (`public/demo/shakti/`)
+
+| File | Prompt |
+|------|--------|
+| `plant-1.jpg` | Interior of an Indian sheet metal workshop, fibre laser cutting machine, sparks, stacked steel sheets, industrial lighting, no people |
+| `plant-2.jpg` | Row of CNC press brakes in a clean fabrication shop, bent metal parts stacked on pallets, overhead factory lighting |
+| `plant-3.jpg` | Welding bay with MIG welding station and bright weld arc, protective screens, dark industrial interior, no faces visible |
+| `plant-4.jpg` | Powder coating line with a long curing oven, hanging metal parts on a conveyor, warm industrial interior |
+| `plant-5.jpg` | Finished sheet metal enclosures and brackets stacked neatly on a pallet, grey powder coated, warehouse background |
+
+## Everest Public School — Faridabad (`public/demo/everest/`)
+
+| File | Prompt |
+|------|--------|
+| `school-1.jpg` | Exterior of a modern Indian CBSE school building, red brick and white, flagpole, neat landscaped front, clear morning light, no people |
+| `school-2.jpg` | Bright school library interior with wooden shelves, reading tables, large windows, books neatly arranged, no people |
+| `school-3.jpg` | School science laboratory, workbenches, microscopes and glassware neatly arranged, bright daylight, no people |
+| `school-4.jpg` | School sports ground with running track and basketball court, goalposts, early morning light, empty |
+| `school-5.jpg` | Empty modern Indian classroom with desks in rows, whiteboard, ceiling fans, natural light from windows |
+| `route-map.jpg` | Stylised minimal map illustration of Faridabad sectors with bus route lines in maroon and gold, flat vector style |
+
+## Crestline Commercial — US (`public/demo/crestline/`)
+
+| File | Prompt |
+|------|--------|
+| `bldg-1.jpg` | Six-storey brick and glass commercial office building, American city street, late afternoon light, wide architectural shot |
+| `bldg-2.jpg` | Modern office lobby with terrazzo floor, reception desk, seating and large plants, bright daylight, no people |
+| `bldg-3.jpg` | Empty open-plan office floor, exposed ceiling, polished concrete, floor-to-ceiling windows, no furniture |
+| `bldg-4.jpg` | Corporate conference room with long table, screen on the wall, glass partition, daylight, no people |
+| `bldg-5.jpg` | Rooftop terrace of an office building with seating, planters and a city view, golden hour |
+| `plate-low.jpg`, `plate-mid.jpg`, `plate-high.jpg` | Architectural floor plate drawing of a commercial office floor, 2D top-down, thin black lines on white, core and lifts marked, dimension lines |
+
 ---
 
 ## For nacovate.com itself

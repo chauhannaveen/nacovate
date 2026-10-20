@@ -65,6 +65,9 @@ the demo set grows.
 | `/demos/harlow-vance-realty/` | generated | Demo — US real estate agency (gallery, floor plan, valuation capture) |
 | `/demos/westbrook-clinic/` | generated | Demo — US medical clinic (booking + insurance checker + intake) |
 | `/demos/ironside-strength/` | generated | Demo — US gym (class schedule + membership + trial) |
+| `/demos/shakti-steel/` | generated | Demo — Faridabad fabrication unit (capability spec table, certifications, RFQ) |
+| `/demos/everest-school/` | generated | Demo — Faridabad CBSE school (published fees, admission timeline, bus routes) |
+| `/demos/crestline-commercial/` | generated | Demo — US commercial leasing (availability table, floor plates, tours) |
 
 Demo photography is drawn placeholders; `IMAGE-PROMPTS.md` has generation prompts and
 file paths for swapping in real images.
@@ -75,6 +78,16 @@ The demos link back to `/#work`. If that section is ever renamed, fix the links 
 ---
 
 ## Design system
+
+The homepage also carries a motion layer (reading-progress bar, hero aurora, cursor
+spotlight on cards, count-up figures, a step line that draws on scroll, a sector marquee
+and the before/after comparison in `#replace`). It is vanilla JS in the second `<script>`
+block and CSS under "Motion & interaction layer". Two rules worth keeping:
+
+- **Do not put `filter: blur()` on the aurora.** It forces the whole hero subtree onto a
+  composited layer — the hero rendered blank in capture and it costs real frames on
+  low-end phones. The radial gradients are already soft enough without it.
+- Everything is disabled under `prefers-reduced-motion: reduce`. Keep it that way.
 
 `index.html` defines CSS custom properties on `:root` with a `[data-theme=dark]` override.
 Use the tokens, never raw hex:
