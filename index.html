@@ -378,6 +378,63 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 .reveal.in{opacity:1;transform:none;}
 @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none;}}
 .stagger>*{transition-delay:calc(var(--i,0) * 70ms);}
+
+/* ---- Work / demo builds ------------------------------------------------- */
+.work-grid{display:grid;gap:1.1rem;grid-template-columns:1fr;}
+@media (min-width:720px){.work-grid{grid-template-columns:1fr 1fr;}}
+@media (min-width:1040px){
+  .work-grid{grid-template-columns:repeat(6,1fr);}
+  /* First two span three columns each, the last three span two: a 2-up row above a
+     3-up row, which keeps five cards from leaving an orphan. */
+  .work-grid>.work:nth-child(1),.work-grid>.work:nth-child(2){grid-column:span 3;}
+  .work-grid>.work:nth-child(n+3){grid-column:span 2;}
+}
+.work{display:flex;flex-direction:column;overflow:hidden;text-decoration:none;color:inherit;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease;}
+.work:hover{border-color:var(--signal);transform:translateY(-3px);box-shadow:var(--shadow-lift);}
+.work:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+.work-shot{position:relative;display:grid;place-items:center;aspect-ratio:16/9;
+  border-bottom:1px solid var(--border);color:rgba(255,255,255,.55);}
+.work-shot svg{width:34%;height:34%;}
+.work-shot::after{content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0,rgba(0,0,0,.05) 1px,transparent 1px,transparent 10px);}
+.shot-a{background:linear-gradient(135deg,#2f3f7a,#121932);}
+.shot-b{background:linear-gradient(135deg,#0e8a6b,#042a20);}
+.shot-c{background:linear-gradient(135deg,#8a6a43,#2a241c);}
+.shot-d{background:linear-gradient(135deg,#0f6e86,#06303c);}
+.shot-e{background:linear-gradient(135deg,#e4572e,#15171c);}
+.work-body{display:flex;flex-direction:column;flex:1;padding:1.15rem 1.25rem 1.25rem;}
+.work-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.7rem;}
+.tag{font:600 10px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  padding:.36rem .5rem;border-radius:999px;background:var(--signal-soft);color:var(--signal-ink);}
+.tag--in,.tag--us{background:transparent;border:1px solid var(--border-strong);color:var(--faint);}
+.work h3{font:600 1.06rem/1.3 var(--serif);margin:0 0 .45rem;}
+.work p{font-size:.9rem;line-height:1.6;color:var(--muted);margin:0;flex:1;}
+.work-go{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;
+  font-size:.86rem;font-weight:600;color:var(--signal-ink);}
+.work:hover .work-go svg{transform:translateX(3px);}
+.work-go svg{transition:transform .2s ease;}
+.work-note{margin-top:1.6rem;max-width:46rem;}
+
+/* ---- Proof (replaces the old testimonial block) ------------------------- */
+.proof-grid{display:grid;gap:1.1rem;grid-template-columns:1fr;}
+@media (min-width:760px){.proof-grid{grid-template-columns:1fr 1fr;}}
+.proof{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;}
+.proof h3{font:600 1.02rem/1.35 var(--serif);margin:.6rem 0 .45rem;}
+.proof p{font-size:.9rem;line-height:1.65;color:var(--muted);margin:0;}
+.proof .n{font:600 11px/1 var(--mono);letter-spacing:.1em;color:var(--signal-ink);text-transform:uppercase;}
+.proof-note{margin-top:1.5rem;max-width:48rem;padding:1.1rem 1.25rem;border-left:3px solid var(--signal);
+  background:var(--signal-soft);border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
+.proof-note p{margin:0;font-size:.92rem;line-height:1.7;color:var(--ink);}
+
+.prod-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:.1rem .9rem;list-style:none;
+  margin:1.15rem 0 1rem;padding:1rem 0 0;border-top:1px solid var(--border);}
+@media (min-width:560px){.prod-specs{grid-template-columns:repeat(4,1fr);}}
+.prod-specs li{display:flex;flex-direction:column;gap:.12rem;padding:.3rem 0;}
+.prod-specs b{font:600 1.3rem/1 var(--serif);color:var(--ink);}
+.prod-specs span{font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);}
+.prod-stack{display:block;font:500 .74rem/1.7 var(--mono);color:var(--faint);margin-bottom:1rem;}
 </style>
 </head>
 <body>
@@ -562,36 +619,73 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">Our work</p>
-        <h2>Three builds you can click through.</h2>
-        <p>Demonstration sites we built to show how we work. Each solves a different job &mdash; getting booked, getting enquiries, getting people signed up &mdash; for a business that doesn't exist. Open them on your phone; that's where your customers will read them.</p>
+        <h2>Five builds you can click through right now.</h2>
+        <p>Demonstration sites, built for businesses that don&rsquo;t exist, so you can judge the work rather than take our word for it. Each one solves a different job &mdash; getting booked, getting enquiries, getting people signed up. Open them on your phone; that&rsquo;s where your customers will read them.</p>
       </div>
-      <div class="cards stagger">
-        <article class="card reveal" style="--i:0;">
-          <p class="benefit">Medical clinic</p>
-          <h3>Booking &amp; patient intake</h3>
-          <p>A same-day slot picker, an insurance checker that answers the front desk's most-asked question without a phone call, and new-patient paperwork done at home instead of on a clipboard.</p>
-          <a class="textlink" href="/demos/westbrook-clinic/">Open the demo
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </article>
-        <article class="card reveal" style="--i:1;">
-          <p class="benefit">Real estate agency</p>
-          <h3>Listings &amp; valuation enquiries</h3>
-          <p>Filterable property cards that work with a thumb, and a valuation form that asks for an address before it asks for a phone number &mdash; which is why people finish it.</p>
-          <a class="textlink" href="/demos/harlow-vance-realty/">Open the demo
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </article>
-        <article class="card reveal" style="--i:2;">
-          <p class="benefit">Gym &amp; fitness studio</p>
-          <h3>Class schedule &amp; signups</h3>
-          <p>A day-by-day timetable with live spaces, three membership tiers arranged so the right one is obvious, and a free-trial form that asks for three fields and nothing else.</p>
-          <a class="textlink" href="/demos/ironside-strength/">Open the demo
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </article>
+
+      <div class="work-grid stagger">
+        <a class="work reveal" href="/demos/aravali-estates/" style="--i:0;">
+          <span class="work-shot shot-a" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h20M4 21V9h5v12M11 21V4h6v17M6 12h1M6 15h1M13 8h2M13 12h2M13 16h2"/></svg>
+          </span>
+          <span class="work-body">
+            <span class="work-tags"><span class="tag tag--in">India</span><span class="tag">Real estate</span></span>
+            <h3>Aravali Estates, Gurgaon</h3>
+            <p>A working EMI calculator, HARERA numbers on every project, carpet area rather than super built-up, and Sunday site visits. Built the way an Indian buyer actually shops.</p>
+            <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="/demos/shanti-dental/" style="--i:1;">
+          <span class="work-shot shot-b" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3c-2 0-3 1.5-3 4 0 3 1 5 1.5 9 .3 2 2.5 2.2 2.8 0L10 12h4l.7 4c.3 2.2 2.5 2 2.8 0 .5-4 1.5-6 1.5-9 0-2.5-1-4-3-4-1.5 0-2 .7-4 .7S9.5 3 8 3Z"/></svg>
+          </span>
+          <span class="work-body">
+            <span class="work-tags"><span class="tag tag--in">India</span><span class="tag">Dental clinic</span></span>
+            <h3>Shanti Dental Care, Faridabad</h3>
+            <p>Every treatment price published on the page, no-cost EMI flagged where it applies, and WhatsApp as the main booking button &mdash; because that is how patients actually get in touch.</p>
+            <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="/demos/harlow-vance-realty/" style="--i:2;">
+          <span class="work-shot shot-c" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5M5.5 10v10h13V10M10 20v-5.5h4V20"/></svg>
+          </span>
+          <span class="work-body">
+            <span class="work-tags"><span class="tag tag--us">US</span><span class="tag">Real estate</span></span>
+            <h3>Harlow &amp; Vance Realty</h3>
+            <p>A swipeable photo gallery, floor plan, facts strip and a valuation form that asks for an address before it asks for a phone number &mdash; which is why people finish it.</p>
+            <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="/demos/westbrook-clinic/" style="--i:3;">
+          <span class="work-shot shot-d" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v10M7 12h10M4 4h16v16H4z"/></svg>
+          </span>
+          <span class="work-body">
+            <span class="work-tags"><span class="tag tag--us">US</span><span class="tag">Medical clinic</span></span>
+            <h3>Westbrook Family Medicine</h3>
+            <p>A same-day slot picker, an insurance checker that answers the front desk&rsquo;s most-asked question without a phone call, and intake paperwork done at home.</p>
+            <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="work reveal" href="/demos/ironside-strength/" style="--i:4;">
+          <span class="work-shot shot-e" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6M8 7v10M16 7v10M20 9v6M8 12h8"/></svg>
+          </span>
+          <span class="work-body">
+            <span class="work-tags"><span class="tag tag--us">US</span><span class="tag">Gym</span></span>
+            <h3>Ironside Strength Co.</h3>
+            <p>A day-by-day timetable with live spaces, three membership tiers arranged so the right one is obvious, and a free-trial form that asks for three fields and nothing else.</p>
+            <span class="work-go">Open the demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
       </div>
-      <p class="meta" style="margin-top:1.5rem;max-width:46rem;">Every business name, price, opening hour and review in these demos is invented. Each page says so at the top, and none of the forms send anything.</p>
+
+      <p class="meta work-note">Every business name, price, opening hour and review in these demos is invented. Each page says so at the bottom, and none of the forms send anything.</p>
     </div>
   </section>
 
@@ -608,7 +702,14 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
           <span class="badge">In daily use</span>
           <h3>LeadForge</h3>
           <p>Lead research and outreach, end to end. It finds small businesses worth contacting, finds a real contact address, checks what their website is doing badly, and drafts a personalised email &mdash; which a human reads and approves before anything is sent. We built it for our own sales desk and run it every week.</p>
-          <a class="textlink" href="/products/leadforge/">Read how it's built
+          <ul class="prod-specs">
+            <li><b>13</b><span>server routes</span></li>
+            <li><b>4</b><span>data sources</span></li>
+            <li><b>2</b><span>AI providers</span></li>
+            <li><b>~10.7k</b><span>lines of TypeScript</span></li>
+          </ul>
+          <span class="prod-stack">Next.js &middot; TypeScript &middot; Firestore &middot; SendGrid &middot; Google Places &middot; PageSpeed &middot; Groq &middot; Claude</span>
+          <a class="textlink" href="/products/leadforge/">Read how it&rsquo;s built
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -621,38 +722,40 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
+  <!-- PROOF -->
   <section id="clients">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">In their words</p>
-        <h2>Trusted by the businesses we look after.</h2>
+        <p class="eyebrow">Judge for yourself</p>
+        <h2>We&rsquo;d rather show you than tell you.</h2>
+        <p>Nacovate is new, and we are not going to pretend otherwise with quotes you cannot verify. Here is what you can check before you pay us anything.</p>
       </div>
-      <div class="quotes stagger">
-        <figure class="quote reveal" style="--i:0;">
-          <span class="qmark" aria-hidden="true">&ldquo;</span>
-          <p>Our old website looked like it was built in 2010 and brought in nothing. The new one went live in under three weeks, and we now get steady enquiries every month.</p>
-          <figcaption class="who">
-            <span class="avatar" aria-hidden="true">01</span>
-            <span><b>Clinic owner</b><span>Healthcare</span></span>
-          </figcaption>
-        </figure>
-        <figure class="quote reveal" style="--i:1;">
-          <span class="qmark" aria-hidden="true">&ldquo;</span>
-          <p>What I appreciate most is the plain talk. No jargon, no upselling &mdash; they told us what we didn't need, fixed what we did, and now things just run.</p>
-          <figcaption class="who">
-            <span class="avatar" aria-hidden="true">02</span>
-            <span><b>Agency principal</b><span>Real estate</span></span>
-          </figcaption>
-        </figure>
-        <figure class="quote reveal" style="--i:2;">
-          <span class="qmark" aria-hidden="true">&ldquo;</span>
-          <p>They automated our job-card follow-ups and weekly reports. That's easily six hours a week back &mdash; and nothing falls through the cracks anymore.</p>
-          <figcaption class="who">
-            <span class="avatar" aria-hidden="true">03</span>
-            <span><b>Workshop owner</b><span>Fabrication</span></span>
-          </figcaption>
-        </figure>
+
+      <div class="proof-grid stagger">
+        <div class="proof reveal" style="--i:0;">
+          <span class="n">01</span>
+          <h3>Five working demo sites</h3>
+          <p>Not screenshots or mockups &mdash; real pages you can open, click through and test on your phone right now. Book a slot, filter the listings, run the EMI calculator. If the work is any good, that is where you will see it.</p>
+        </div>
+        <div class="proof reveal" style="--i:1;">
+          <span class="n">02</span>
+          <h3>A product we built and run</h3>
+          <p>LeadForge is a full application &mdash; thirteen server routes, four external data sources, two AI providers &mdash; that we designed, built and use every week. The <a class="textlink" href="/products/leadforge/">case study</a> explains the hard decisions, not just the feature list.</p>
+        </div>
+        <div class="proof reveal" style="--i:2;">
+          <span class="n">03</span>
+          <h3>A small, fixed first project</h3>
+          <p>You do not have to trust us up front. We start with one clear piece of work at a fixed price, you see how we handle it, and you decide whether there is a second. No contract, no retainer, no notice period.</p>
+        </div>
+        <div class="proof reveal" style="--i:3;">
+          <span class="n">04</span>
+          <h3>The person who builds it answers the phone</h3>
+          <p>There is no account manager and no support queue. When you email or message, you are talking to whoever would actually do the work &mdash; which also means we will tell you when something is a bad idea.</p>
+        </div>
+      </div>
+
+      <div class="proof-note reveal" style="--i:4;">
+        <p><b>No client testimonials here yet.</b> We would rather have an empty space than invented praise &mdash; you have no way to check a quote from &ldquo;a clinic owner&rdquo;, and we would not believe one either. As real clients come on board and are happy to be named, their words will go here.</p>
       </div>
     </div>
   </section>
@@ -727,7 +830,7 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
         <a href="#why">Why Nacovate</a>
         <a href="#work">Work</a>
         <a href="#products">Products</a>
-        <a href="#clients">Clients</a>
+        <a href="#clients">Proof</a>
         <a href="mailto:team@nacovate.com">Contact</a>
       </nav>
     </div>

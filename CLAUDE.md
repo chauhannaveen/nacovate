@@ -60,9 +60,14 @@ the demo set grows.
 |-----|------|------|
 | `/` | `index.html` | The marketing site. Sections: who, services, why, how, **work**, products, clients, contact |
 | `/products/leadforge/` | generated | LeadForge case study — linked from the Products card |
-| `/demos/westbrook-clinic/` | generated | Demo — medical clinic (booking + insurance checker + intake) |
-| `/demos/harlow-vance-realty/` | generated | Demo — real estate agency (listings + valuation capture) |
-| `/demos/ironside-strength/` | generated | Demo — gym (class schedule + membership + trial) |
+| `/demos/aravali-estates/` | generated | Demo — Gurgaon property consultancy (EMI calculator, HARERA, site visits) |
+| `/demos/shanti-dental/` | generated | Demo — Faridabad dental clinic (published pricing, WhatsApp booking, EMI) |
+| `/demos/harlow-vance-realty/` | generated | Demo — US real estate agency (gallery, floor plan, valuation capture) |
+| `/demos/westbrook-clinic/` | generated | Demo — US medical clinic (booking + insurance checker + intake) |
+| `/demos/ironside-strength/` | generated | Demo — US gym (class schedule + membership + trial) |
+
+Demo photography is drawn placeholders; `IMAGE-PROMPTS.md` has generation prompts and
+file paths for swapping in real images.
 
 The demos link back to `/#work`. If that section is ever renamed, fix the links in the
 **source project** (`src/components/demo/DemoBanner.tsx`), not in the generated HTML.
@@ -108,9 +113,12 @@ checking the render-blocking trade-off first.
 3. **Every factual claim in the case study is checkable against the LeadForge source**
    (`C:\Users\chauh\Claude\Projects\Linked leads generator\leadforge-app`). If LeadForge
    changes, update `src/lib/case-study.ts` in the source project in the same change.
-4. **Demos are labelled as demos** — an undismissable banner at the top of each page and
-   a note in the footer. Business names, people, prices, hours and reviews are visibly
-   placeholders.
+4. **Demos are labelled as demos** — a disclosure bar at the very bottom of each demo
+   page naming it a demo website and saying the business is not real. Reviews inside a
+   demo are part of the fiction and need no separate label; the page-level disclosure
+   covers them. **This does not extend to nacovate.com itself** — see rule 1. Invented
+   testimonials on our own site would be deceiving real prospects, and fake reviews are
+   actionable under both the US FTC rule and India's CCPA guidelines.
 5. **No stock photography in the demos.** Drawn placeholders only. Borrowing someone's
    interior photography implies the work in it is ours.
 6. **No demo form sends anything.** Each shows a success state that says it is a demo.
