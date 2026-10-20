@@ -58,7 +58,7 @@ the demo set grows.
 
 | URL | File | What |
 |-----|------|------|
-| `/` | `index.html` | The marketing site. Sections: who, services, why, how, **work**, products, clients, contact |
+| `/` | `index.html` | The marketing site. Sections: who, services, why, how, **video**, **work**, products, clients, contact |
 | `/products/leadforge/` | generated | LeadForge case study — linked from the Products card |
 | `/demos/aravali-estates/` | generated | Demo — Gurgaon property consultancy (EMI calculator, HARERA, site visits) |
 | `/demos/shanti-dental/` | generated | Demo — Faridabad dental clinic (published pricing, WhatsApp booking, EMI) |
@@ -122,6 +122,22 @@ Archivo is embedded in `index.html` as base64 `@font-face`. That is why the file
 checking the render-blocking trade-off first.
 
 ---
+
+## The video service
+
+`#video` sells short-form video. It shows a **mock-up** of a reel's four-beat structure
+(hook / proof / offer / CTA) built in CSS — not a sample film, and the page says so.
+`VIDEO-PLAYBOOK.md` has the shot lists, generation prompts and rules for producing three
+real samples, which is what the section actually needs.
+
+Two content rules specific to video, both load-bearing:
+
+- **No AI-generated fake customers or testimonials.** Same lie as an invented review,
+  same exposure. Synthetic presenters get labelled.
+- **No invented statistics.** The "video lifts conversions by 86%" numbers trace back to
+  marketing blogs citing each other with no study underneath. The site says so out loud,
+  which is more persuasive than the stat would have been. Do not quietly swap in a
+  number later.
 
 ## Rules for content on this site
 

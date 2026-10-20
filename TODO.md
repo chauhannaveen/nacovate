@@ -11,6 +11,7 @@ Live site: [nacovate.com](https://nacovate.com) · Repo: [chauhannaveen/nacovate
 - [x] **Products section** — placeholder card replaced with LeadForge, linking to the case study at `/products/leadforge/`.
 - [ ] **Port the generated pages to plain HTML** — `demos/`, `products/` and `_next/` are a committed Next.js static export (see [CLAUDE.md](CLAUDE.md)). Taken as a shortcut to ship quickly; the cost is build artefacts in git and a build step on a repo that otherwise deploys by pushing one file. Nothing on those pages needs a framework. Port them, then delete the Next project.
 - [ ] **Demo photography** — every image across all eight demos is a drawn placeholder. Generation prompts, file paths and sizes are in [IMAGE-PROMPTS.md](IMAGE-PROMPTS.md); drop files into `portfolio-site/public/demo/<slug>/`, add the `src`, re-run `./sync-demos.sh`.
+- [ ] **Three sample videos** — `#video` sells the service with a structure mock-up, not real films. Shot lists and prompts are in [VIDEO-PLAYBOOK.md](VIDEO-PLAYBOOK.md); dental, property and fabrication first, since those demo sites already exist. This is to video what the eight demos were to the web work.
 - [ ] **WhatsApp Business** — move +91 96503 13207 to the WhatsApp Business app for business profile, quick replies, and auto-greetings.
 - [ ] **Google Business Profile** — create and verify the listing; setup steps and paste-ready copy are in [google-business-profile.md](google-business-profile.md). Biggest free lever for local enquiries.
 
