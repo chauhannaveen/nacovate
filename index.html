@@ -689,6 +689,60 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
   .reel-scene:nth-child(4){opacity:1;}
   .reel-bars i::after{width:100%;}
 }
+
+/* ===== Real sample videos ================================================ */
+.vsamples{display:grid;gap:1.4rem;grid-template-columns:1fr;margin-top:2rem;}
+@media (min-width:620px){.vsamples{grid-template-columns:1fr 1fr;}}
+@media (min-width:1000px){.vsamples{grid-template-columns:repeat(3,1fr);}}
+
+.vs{display:flex;flex-direction:column;}
+.vs-frame{position:relative;width:100%;aspect-ratio:9/16;border-radius:22px;overflow:hidden;
+  background:#15110c;border:5px solid #0e0b08;box-shadow:var(--shadow);cursor:pointer;}
+.vs-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+
+/* Caption overlay — real text over the video, not burned into the pixels, so it
+   stays selectable, translatable and editable without re-encoding the file. */
+.vs-cap{position:absolute;left:0;right:0;bottom:0;padding:1rem .9rem 1.1rem;z-index:3;
+  background:linear-gradient(to top,rgba(0,0,0,.78),rgba(0,0,0,.35) 60%,transparent);
+  pointer-events:none;}
+.vs-cap p{margin:0;color:#fff;font:600 1.02rem/1.25 var(--serif);letter-spacing:-.01em;
+  text-shadow:0 1px 10px rgba(0,0,0,.5);}
+.vs-cap small{display:block;margin-top:.3rem;color:rgba(255,255,255,.72);font-size:.72rem;
+  font-weight:500;}
+.vs-beat{position:absolute;left:.65rem;top:.65rem;z-index:3;font:700 9px/1 var(--mono);
+  letter-spacing:.13em;text-transform:uppercase;background:rgba(0,0,0,.55);color:#fff;
+  padding:.32rem .45rem;border-radius:4px;backdrop-filter:blur(4px);pointer-events:none;}
+.vs-bars{position:absolute;top:.65rem;right:.65rem;left:5.4rem;z-index:3;display:flex;gap:3px;
+  pointer-events:none;}
+.vs-bars i{flex:1;height:2px;border-radius:2px;background:rgba(255,255,255,.3);overflow:hidden;}
+.vs-bars i b{display:block;height:100%;width:0;background:#fff;}
+
+.vs-play{position:absolute;inset:0;z-index:4;display:grid;place-items:center;
+  background:rgba(0,0,0,.25);transition:opacity .25s ease;border:0;cursor:pointer;padding:0;}
+.vs-play[hidden]{display:none;}
+.vs-play span{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);}
+.vs-play svg{width:22px;height:22px;color:#17150F;margin-left:3px;}
+.vs-frame:hover .vs-play span{transform:scale(1.06);}
+.vs-play span{transition:transform .2s ease;}
+
+.vs-sound{position:absolute;right:.65rem;bottom:.65rem;z-index:5;width:32px;height:32px;
+  border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center;
+  cursor:pointer;backdrop-filter:blur(4px);}
+.vs-sound svg{width:15px;height:15px;}
+
+.vs-meta{margin-top:.85rem;}
+.vs-meta h4{font:600 1rem/1.3 var(--serif);margin:0 0 .2rem;}
+.vs-meta p{font-size:.85rem;line-height:1.55;color:var(--muted);margin:0;}
+.vs-meta a{color:var(--signal-ink);font-weight:600;text-decoration:underline;
+  text-underline-offset:2px;}
+.vs-len{font:600 10px/1 var(--mono);color:var(--faint);letter-spacing:.06em;margin-left:.4rem;}
+
+.vs-note{margin-top:1.6rem;font-size:.84rem;line-height:1.7;color:var(--faint);max-width:52rem;}
+
+@media (prefers-reduced-motion: reduce){
+  .vs-play span{transition:none;}
+}
 </style>
 </head>
 <body>
@@ -1021,9 +1075,82 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
               <span class="reel-cta">Message us &rarr;</span>
             </div>
           </div>
-          <span class="reel-tag">Mock-up &mdash; structure, not a sample film</span>
+          <span class="reel-tag">The structure &mdash; real examples below</span>
         </div>
       </div>
+
+      <h3 style="font:600 1.15rem/1.3 var(--serif);margin:2.8rem 0 .5rem;">Three we made</h3>
+      <p style="font-size:.95rem;line-height:1.7;color:var(--muted);margin:0 0 .4rem;max-width:52rem;">
+        Same four beats each time. Press play &mdash; the captions below the picture are the script,
+        and they change as the video moves through hook, proof, offer and call to action.
+      </p>
+
+      <div class="vsamples">
+        <div class="vs reveal" style="--i:0;">
+          <div class="vs-frame" data-video="dental">
+            <video src="/media/video/dental.mp4#t=0.1" preload="metadata" playsinline muted
+                   aria-label="Sample video for a dental clinic"></video>
+            <span class="vs-beat">1 &middot; Hook</span>
+            <div class="vs-bars" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+            <div class="vs-cap"><p>Putting off the dentist?</p><small>0&ndash;4s &middot; the question in their head</small></div>
+            <button class="vs-play" type="button" aria-label="Play the dental sample">
+              <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+            </button>
+            <button class="vs-sound" type="button" aria-label="Unmute" data-muted="1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
+            </button>
+          </div>
+          <div class="vs-meta">
+            <h4>Dental clinic<span class="vs-len">15 sec</span></h4>
+            <p>Pairs with <a href="/demos/shanti-dental/">the Shanti Dental demo</a> &mdash; same offer, same WhatsApp booking.</p>
+          </div>
+        </div>
+
+        <div class="vs reveal" style="--i:1;">
+          <div class="vs-frame" data-video="property">
+            <video src="/media/video/property.mp4#t=0.1" preload="metadata" playsinline muted
+                   aria-label="Sample video for a property consultancy"></video>
+            <span class="vs-beat">1 &middot; Hook</span>
+            <div class="vs-bars" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+            <div class="vs-cap"><p>What &#8377;1.2 crore actually gets you.</p><small>0&ndash;5s &middot; a number, not an adjective</small></div>
+            <button class="vs-play" type="button" aria-label="Play the property sample">
+              <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+            </button>
+            <button class="vs-sound" type="button" aria-label="Unmute" data-muted="1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
+            </button>
+          </div>
+          <div class="vs-meta">
+            <h4>Property<span class="vs-len">20 sec</span></h4>
+            <p>Pairs with <a href="/demos/aravali-estates/">the Aravali Estates demo</a> &mdash; carpet area, HARERA, site visits.</p>
+          </div>
+        </div>
+
+        <div class="vs reveal" style="--i:2;">
+          <div class="vs-frame" data-video="fabrication">
+            <video src="/media/video/fabrication.mp4#t=0.1" preload="metadata" playsinline muted
+                   aria-label="Sample video for a fabrication unit"></video>
+            <span class="vs-beat">1 &middot; Hook</span>
+            <div class="vs-bars" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+            <div class="vs-cap"><p>Send the drawing.</p><small>0&ndash;5s &middot; short and declarative</small></div>
+            <button class="vs-play" type="button" aria-label="Play the fabrication sample">
+              <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+            </button>
+            <button class="vs-sound" type="button" aria-label="Unmute" data-muted="1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
+            </button>
+          </div>
+          <div class="vs-meta">
+            <h4>Fabrication<span class="vs-len">20 sec</span></h4>
+            <p>Pairs with <a href="/demos/shakti-steel/">the Shakti Steel demo</a> &mdash; drawing in, quote back in 24 hours.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="vs-note">Made with AI generation and cut to the structure above. The captions here are
+      live text over the picture rather than burned into the file &mdash; which is why they are sharp
+      at any size, readable to a screen reader, and can be swapped into Hindi without re-rendering a
+      frame. Nothing downloads until you press play.</p>
 
       <h3 style="font:600 1.15rem/1.3 var(--serif);margin:2.8rem 0 0;">What we make</h3>
       <div class="vformats stagger">
@@ -1546,5 +1673,98 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 })();
 </script>
 
+<script>
+/* Sample video players — captions are live DOM text synced to playback rather than
+   burned into the file, so they stay sharp, selectable, screen-reader readable and
+   translatable without re-encoding a frame. */
+(function(){
+  var CAPS = {
+    dental: [
+      ['Putting off the dentist?', '0–4s · the question in their head', '1 · Hook'],
+      ['Clean room. Sealed instruments.', '4–7s · proof you can see', '2 · Proof'],
+      ['Free consultation. Price before we start.', '7–11s · one concrete reason', '3 · Offer'],
+      ['Book on WhatsApp.', '11–15s · one tap, one action', '4 · Call to action']
+    ],
+    property: [
+      ['What ₹1.2 crore actually gets you.', '0–5s · a number, not an adjective', '1 · Hook'],
+      ['1,840 sq ft carpet — not super built-up.', '5–10s · the figure buyers check', '2 · Proof'],
+      ['HARERA number on every project.', '10–15s · verify it yourself', '3 · Offer'],
+      ['Sunday site visit — cab on us.', '15–20s · the easy next step', '4 · Call to action']
+    ],
+    fabrication: [
+      ['Send the drawing.', '0–5s · short and declarative', '1 · Hook'],
+      ['Laser, bending, welding, coating — one roof.', '5–10s · the capability', '2 · Proof'],
+      ['Quote back in 24 hours. Itemised.', '10–15s · not a lump sum', '3 · Offer'],
+      ['WhatsApp the DXF.', '15–20s · one tap, one action', '4 · Call to action']
+    ]
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll('.vs-frame'), function(frame){
+    var key = frame.getAttribute('data-video');
+    var caps = CAPS[key];
+    if(!caps) return;
+
+    var video = frame.querySelector('video');
+    var capP  = frame.querySelector('.vs-cap p');
+    var capS  = frame.querySelector('.vs-cap small');
+    var beat  = frame.querySelector('.vs-beat');
+    var play  = frame.querySelector('.vs-play');
+    var sound = frame.querySelector('.vs-sound');
+    var bars  = frame.querySelectorAll('.vs-bars b');
+    var shown = -1;
+
+    function paint(){
+      var d = video.duration;
+      if(!d || !isFinite(d)) return;
+      var frac = video.currentTime / d;
+      var i = Math.min(caps.length - 1, Math.floor(frac * caps.length));
+      if(i !== shown){
+        shown = i;
+        capP.textContent = caps[i][0];
+        capS.textContent = caps[i][1];
+        beat.textContent = caps[i][2];
+      }
+      // Fill each segment: complete for past beats, partial for the current one.
+      for(var b = 0; b < bars.length; b++){
+        var segStart = b / bars.length, segEnd = (b + 1) / bars.length;
+        var pct = frac <= segStart ? 0 : frac >= segEnd ? 100
+                : ((frac - segStart) / (segEnd - segStart)) * 100;
+        bars[b].style.width = pct + '%';
+      }
+    }
+
+    video.addEventListener('timeupdate', paint);
+    video.addEventListener('seeked', paint);
+
+    function start(){
+      // Only one sample plays at a time — three videos talking over each other is
+      // the fastest way to make someone close the tab.
+      Array.prototype.forEach.call(document.querySelectorAll('.vs-frame video'), function(other){
+        if(other !== video && !other.paused){ other.pause(); }
+      });
+      video.play().catch(function(){});
+    }
+
+    play.addEventListener('click', function(e){ e.stopPropagation(); start(); });
+    frame.addEventListener('click', function(){ video.paused ? start() : video.pause(); });
+
+    video.addEventListener('play',  function(){ play.hidden = true; });
+    video.addEventListener('pause', function(){ play.hidden = false; });
+    video.addEventListener('ended', function(){
+      play.hidden = false; video.currentTime = 0; shown = -1; paint();
+    });
+
+    sound.addEventListener('click', function(e){
+      e.stopPropagation();
+      video.muted = !video.muted;
+      sound.setAttribute('data-muted', video.muted ? '1' : '0');
+      sound.setAttribute('aria-label', video.muted ? 'Unmute' : 'Mute');
+      sound.innerHTML = video.muted
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>';
+    });
+  });
+})();
+</script>
 </body>
 </html>

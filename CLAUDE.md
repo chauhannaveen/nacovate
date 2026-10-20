@@ -127,8 +127,26 @@ checking the render-blocking trade-off first.
 
 `#video` sells short-form video. It shows a **mock-up** of a reel's four-beat structure
 (hook / proof / offer / CTA) built in CSS — not a sample film, and the page says so.
-`VIDEO-PLAYBOOK.md` has the shot lists, generation prompts and rules for producing three
-real samples, which is what the section actually needs.
+**Three real samples now ship** from `media/video/` — `dental.mp4` (15s), `property.mp4`
+and `fabrication.mp4` (20s each), all 720x1280. The structure mock-up is kept above them
+as the explainer; the players sit below it under "Three we made".
+
+Two things about how they are wired, both deliberate:
+
+- **Captions are live DOM text over the video, not burned into the file.** They are
+  defined in the `CAPS` object in the players script and synced to `currentTime` in
+  quarters. That keeps them sharp at any size, readable to a screen reader, and
+  translatable without re-encoding a frame. **The consequence: the .mp4 files themselves
+  have no captions**, so anything posted to Instagram or a Google Business Profile needs
+  them burned in separately.
+- **The files live in this repo at `media/video/`, not in the Next project's `public/`.**
+  The three demo pages reference `/media/video/*.mp4` absolutely, which resolves on the
+  deployed site because both are served from the same origin. Running `portfolio-site`
+  standalone with `npm run dev` will show the poster frame and fail to play. That is
+  expected, not a bug.
+
+`VIDEO-SHOTS.md` has the prompts and compression commands; `VIDEO-PLAYBOOK.md` has the
+strategy. Both still apply for the next batch.
 
 Two content rules specific to video, both load-bearing:
 
