@@ -743,6 +743,14 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
 @media (prefers-reduced-motion: reduce){
   .vs-play span{transition:none;}
 }
+
+/* Seventh format card spans the row, so it reads as the featured one rather than
+   leaving an orphan in a three-up grid. */
+@media (min-width:1040px){ .vformats>.vf-wide{grid-column:1/-1;} }
+.vf-wide p{max-width:60rem;}
+.vf-flag{margin-left:auto;font:700 9px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  background:var(--signal);color:var(--on-signal);padding:.32rem .45rem;border-radius:4px;}
+.vf-top{align-items:center;}
 </style>
 </head>
 <body>
@@ -1076,6 +1084,12 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
             </div>
           </div>
           <span class="reel-tag">The structure &mdash; real examples below</span>
+        </div>
+        <div class="vf vf-wide reveal" style="--i:6;">
+          <div class="vf-top"><span class="vf-ratio">9:16</span><span class="vf-len">15&ndash;30 sec</span><span class="vf-flag">Best for paid ads</span></div>
+          <h3>Filmed by your own people</h3>
+          <p>We write the script and tell you where to stand; your receptionist, trainer or site engineer films it on their phone; we cut it. This is the format that works hardest in a paid feed, precisely because it does not look like an advert &mdash; and because the person on screen genuinely works for you, there is nobody to invent and nothing to disclose.</p>
+          <span class="where">Meta ads &middot; Instagram &middot; WhatsApp status</span>
         </div>
       </div>
 

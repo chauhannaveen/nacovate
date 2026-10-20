@@ -148,6 +148,13 @@ Two things about how they are wired, both deliberate:
 `VIDEO-SHOTS.md` has the prompts and compression commands; `VIDEO-PLAYBOOK.md` has the
 strategy. Both still apply for the next batch.
 
+**UGC is a format inside this service, not a sixth service.** It is one card in the
+formats grid ("Filmed by your own people") and should stay that way — a solo studio
+selling six services reads as someone who has not decided what they do. The honest
+version is directing and editing footage the client's own staff films: nothing to
+disclose, nobody invented, and it is the format that works hardest in a paid feed.
+AI-generated "customers" are the thing we refuse, below.
+
 Two content rules specific to video, both load-bearing:
 
 - **No AI-generated fake customers or testimonials.** Same lie as an invented review,
