@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import { CaseStudy } from '@/components/portfolio/CaseStudy'
-import { NacovateFooter, NacovateHeader } from '@/components/portfolio/NacovateChrome'
+import { CaseStudy } from '@/components/site/CaseStudy'
+import { NacovateFooter, NacovateHeader } from '@/components/site/NacovateChrome'
 
 export const metadata: Metadata = {
   title: 'LeadForge — a sales system we built end to end | Nacovate',

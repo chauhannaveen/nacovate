@@ -98,7 +98,7 @@ place still on placeholders for that reason. Pass a resolved string down as a pr
 those ever need photos.
 
 The demos link back to `/#work`. If that section is ever renamed, fix the links in the
-**source project** (`src/components/demo/DemoBanner.tsx`), not in the generated HTML.
+**source project** (`portfolio-site/src/components/demo/DemoFooter.tsx`), not in the generated HTML.
 
 ---
 

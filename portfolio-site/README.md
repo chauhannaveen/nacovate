@@ -47,18 +47,23 @@ any absolute link back to `nacovate.com`.
 | `src/app/demos/*/` | The eight demo builds — one directory per fictional business |
 | `src/app/products/leadforge/` | The LeadForge case study |
 | `src/components/demo/` | Shared demo parts: footer disclosure, no-op form, review strip, image, gallery, video |
+| `src/components/site/` | The two pieces belonging to nacovate.com itself: the case-study body and the header/footer chrome the generated pages wear |
 | `src/lib/photos.ts` | Resolves demo photography at build time — see below |
 | `src/lib/case-study.ts` | All case-study copy, kept out of the markup so claims are easy to audit |
 | `public/demo/<slug>/` | Demo photography. Empty today; drop files in and rebuild |
 
-### Dead weight, kept for now
+### There is no root page, on purpose
 
-`src/app/page.tsx`, `src/components/portfolio/` and `src/lib/site.ts` are the original
-standalone one-page portfolio. **None of it is published** — `sync-demos.sh` deliberately
-does not copy `out/index.html`, because the homepage is the hand-written `index.html` in
-the repo root. That is why `site.ts` still says `PLACEHOLDER@example.com` and nothing is
-wrong: no published page imports it. Delete that branch when the generated pages are ported
-to plain HTML, which is the plan recorded in the repo's `CLAUDE.md`.
+`src/app/page.tsx` does not exist, so this project generates no `/` and `out/index.html`
+is never written. The homepage of nacovate.com is the hand-written `index.html` in the repo
+above.
+
+It used to exist: a standalone one-page portfolio with its own hero, demo grid and contact
+form, from before the demos were folded into nacovate.com. It was deleted in Nov 2026
+because nothing published it and it had quietly drifted — its demo listing still showed
+three demos when the site was showing eight, which is exactly the kind of thing that gets
+mistaken for a bug in the live site. If a page needs the site's chrome, it takes it from
+`src/components/site/NacovateChrome.tsx`, the way the case study does.
 
 ### Demo photography
 
