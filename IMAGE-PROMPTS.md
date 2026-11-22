@@ -9,12 +9,21 @@ Works with Midjourney, DALL·E, Imagen, Flux, Ideogram or any other generator.
 
 ## How to use these
 
-1. Generate the image.
-2. Save it to `portfolio-site/public/demo/<slug>/<name>.jpg` — e.g.
-   `public/demo/aravali/hero-1.jpg`.
-3. In the demo's source, add `src` to that image:
-   `{ label: 'Tower elevation', src: '/demo/aravali/hero-1.jpg' }`
-4. Run `./sync-demos.sh` from the Nacovate repo.
+**Two steps. There is no code change.**
+
+1. Save the file under `portfolio-site/public/demo/<slug>/` **in this repo** —
+   `C:\Users\chauh\Documents\AI Apps\Nacovate\portfolio-site\public\demo\` — using the
+   exact slug and filename from the tables below, e.g. `…\demo\aravali\hero-1.jpg`.
+2. Run `./sync-demos.sh` from the repo root, then commit and push.
+
+Every image slot on every demo is already wired to look for its file at build time
+(`portfolio-site/src/lib/photos.ts` → `photosFor(slug)`). A slot with no file keeps its drawn
+placeholder; a slot whose file exists switches to the photo. So you can deliver these one
+folder at a time and nothing needs editing in between. **The filename is the contract** —
+`hero-2.jpg` lands in the second gallery slot and nowhere else.
+
+`.jpg` is assumed but `.jpeg`, `.png`, `.webp` and `.avif` all work, so don't bother
+converting what your generator handed you — just keep the base name.
 
 **Sizes.** Gallery and hero images: 1600×1200 (4:3) or 1600×1000 (16:10). Thumbnails are
 generated from the same file, so one image per slot is enough. Portraits: 600×600 square.
@@ -69,7 +78,11 @@ angles or empty rooms.
 | `prop-5.jpg` | Back garden of an American suburban home, mature oak shade, timber fence, lawn and patio furniture, late afternoon |
 | `prop-6.jpg` | Quiet residential street in a Texas suburb, mature trees both sides, sidewalk, parked cars, soft evening light |
 | `floorplan.jpg` | Clean architectural floor plan of a four-bedroom single-storey house, 2D top-down, thin black lines on white, labelled rooms |
+| `map.jpg` | Stylised minimal street map illustration of an American suburb, muted sage and cream, labelled roads, one dark-green location pin, flat vector style |
 | `agent.jpg` | Real estate agent's hands passing a set of house keys across a desk with a contract, close crop, no face visible, warm office light |
+
+`prop-1`, `prop-2` and `prop-6` also fill the three-image collage at the top of the page,
+so those three carry the most weight — do them first if you are doing a partial set.
 
 ## Ironside Strength Co. — US gym (`public/demo/ironside/`)
 
@@ -99,6 +112,9 @@ Only if you decide to add a gallery here — this demo currently uses none.
 | `plant-3.jpg` | Welding bay with MIG welding station and bright weld arc, protective screens, dark industrial interior, no faces visible |
 | `plant-4.jpg` | Powder coating line with a long curing oven, hanging metal parts on a conveyor, warm industrial interior |
 | `plant-5.jpg` | Finished sheet metal enclosures and brackets stacked neatly on a pallet, grey powder coated, warehouse background |
+| `work-1.jpg` | Batch of grey powder-coated sheet metal electrical panel enclosures lined up on a workshop floor, industrial lighting |
+| `work-2.jpg` | Welded steel conveyor frame assembly on trestles in a fabrication shop, unpainted mill finish, overhead lighting |
+| `work-3.jpg` | Perforated metal façade panels stacked on edge against a workshop wall, repeating hole pattern, raking side light |
 
 ## Everest Public School — Faridabad (`public/demo/everest/`)
 
@@ -121,6 +137,7 @@ Only if you decide to add a gallery here — this demo currently uses none.
 | `bldg-4.jpg` | Corporate conference room with long table, screen on the wall, glass partition, daylight, no people |
 | `bldg-5.jpg` | Rooftop terrace of an office building with seating, planters and a city view, golden hour |
 | `plate-low.jpg`, `plate-mid.jpg`, `plate-high.jpg` | Architectural floor plate drawing of a commercial office floor, 2D top-down, thin black lines on white, core and lifts marked, dimension lines |
+| `contact.jpg` | Hands on a desk beside a building brochure and a coffee cup, close crop, no face visible, warm office daylight — used as the leasing contact's 56px portrait, so crop tight |
 
 ---
 

@@ -1,0 +1,14 @@
+# The source project for the generated pages lives at ./portfolio-site. Its *source* is
+# tracked here on purpose — that is the whole point of it being in this repo — but its
+# dependencies and its build directories are not.
+#
+# What IS committed is the build OUTPUT, up at the repo root: demos/, products/, _next/
+# and demo/. GitHub Pages serves this repo as-is, so those have to be in git.
+portfolio-site/node_modules/
+portfolio-site/.next/
+portfolio-site/out/
+portfolio-site/next-env.d.ts
+portfolio-site/*.tsbuildinfo
+
+.DS_Store
+Thumbs.db
