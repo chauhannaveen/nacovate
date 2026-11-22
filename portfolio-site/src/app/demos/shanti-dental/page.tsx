@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'A demonstration website for a fictional dental clinic in Faridabad, built around published treatment pricing, WhatsApp booking and no-cost EMI.',
 }
 
-const WHATSAPP = 'https://wa.me/919650313207'
+const WHATSAPP = 'https://wa.me/917678101800'
 
 const REVIEWS: Review[] = [
   {
@@ -75,7 +75,7 @@ export default function ShantiDentalDemo() {
             <a href="#visit" className="hover:text-shanti-600">Visit</a>
           </nav>
           <div className="flex items-center gap-2">
-            <a href="tel:+919650313207" aria-label="Call the clinic" title="Call the clinic" className="grid h-10 w-10 place-items-center rounded-lg ring-1 ring-shanti-100 text-shanti-600 transition hover:bg-shanti-50">
+            <a href="tel:+917678101800" aria-label="Call the clinic" title="Call the clinic" className="grid h-10 w-10 place-items-center rounded-lg ring-1 ring-shanti-100 text-shanti-600 transition hover:bg-shanti-50">
               <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
                 <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
               </svg>
@@ -110,8 +110,8 @@ export default function ShantiDentalDemo() {
                 </svg>
                 Book on WhatsApp
               </a>
-              <a href="tel:+919650313207" className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-3.5 text-sm font-semibold text-shanti-900 ring-1 ring-shanti-100 transition hover:ring-shanti-500/40">
-                Call 96503 13207
+              <a href="tel:+917678101800" className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-3.5 text-sm font-semibold text-shanti-900 ring-1 ring-shanti-100 transition hover:ring-shanti-500/40">
+                Call 76781 01800
               </a>
             </div>
             <dl className="mt-9 grid grid-cols-3 gap-4 border-t border-shanti-100 pt-6">
@@ -275,7 +275,7 @@ export default function ShantiDentalDemo() {
       {/* Sticky mobile action bar — call and WhatsApp side by side, which is how an
           Indian local business actually gets contacted. */}
       <div className="sticky bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-shanti-100 bg-white/95 p-3 backdrop-blur lg:hidden">
-        <a href="tel:+919650313207" className="rounded-lg bg-shanti-900 px-4 py-3.5 text-center text-sm font-semibold text-white">
+        <a href="tel:+917678101800" className="rounded-lg bg-shanti-900 px-4 py-3.5 text-center text-sm font-semibold text-white">
           Call now
         </a>
         <a href={WHATSAPP} className="rounded-lg bg-shanti-600 px-4 py-3.5 text-center text-sm font-semibold text-white">

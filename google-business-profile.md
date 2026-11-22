@@ -19,7 +19,7 @@ Everything needed to create the Nacovate profile at [business.google.com](https:
 | Additional categories | `Software company`, `Website hosting service` | Widen the searches you appear in at no cost. Add hosting only if you'll offer it. |
 | Do you have a location customers can visit? | **No** | Unless you have a real office with walk-in visitors. |
 | Service area | Your city + the specific areas you'd travel to | Keep it to places you'd genuinely serve. Max 20 areas. A realistic list beats a huge radius. |
-| Phone | `+91 96503 13207` | Same number as the website — consistency matters for local ranking. |
+| Phone | `+91 76781 01800` | Same number as the website — consistency matters for local ranking. |
 | Website | `https://www.nacovate.com/?utm_source=gbp` | The `?utm_source=gbp` tag lets you see in analytics how many visitors came from Google Business. |
 
 > **Important:** choosing "No" for a visitable location makes this a *service-area business* and keeps your address private. If you enter a home address without hiding it, Google publishes it.

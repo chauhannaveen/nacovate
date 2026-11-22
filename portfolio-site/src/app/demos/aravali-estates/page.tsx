@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'A demonstration website for a fictional Gurgaon property consultancy, built around an EMI calculator, RERA-compliant listings and site-visit booking.',
 }
 
-const WHATSAPP = 'https://wa.me/919650313207'
+const WHATSAPP = 'https://wa.me/917678101800'
 
 const PROJECTS = [
   { name: 'Verdant Heights', sector: 'Sector 63A', config: '3 & 4 BHK', price: '₹2.4 – 3.8 Cr', carpet: '1,840 – 2,610 sq ft', status: 'Under construction', possession: 'Dec 2027', rera: 'RC/REP/HARERA/GGM/2024/118', motif: 'skyline' as const },
@@ -313,7 +313,7 @@ export default function AravaliEstatesDemo() {
           </div>
           <div className="text-sm">
             <p className="font-semibold text-white">Contact</p>
-            <p className="mt-2">+91 96503 13207</p>
+            <p className="mt-2">+91 76781 01800</p>
             <p>hello@aravaliestates.example</p>
           </div>
           <div className="text-sm">
@@ -329,7 +329,7 @@ export default function AravaliEstatesDemo() {
 
       {/* Sticky mobile action bar */}
       <div className="sticky bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-aravali-200 bg-aravali-50/95 p-3 backdrop-blur lg:hidden">
-        <a href="tel:+919650313207" className="rounded-lg bg-aravali-900 px-4 py-3.5 text-center text-sm font-semibold text-white">
+        <a href="tel:+917678101800" className="rounded-lg bg-aravali-900 px-4 py-3.5 text-center text-sm font-semibold text-white">
           Call now
         </a>
         <a href={WHATSAPP} className="rounded-lg bg-aravali-700 px-4 py-3.5 text-center text-sm font-semibold text-white">

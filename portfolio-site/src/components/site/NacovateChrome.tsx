@@ -45,7 +45,7 @@ export function NacovateFooter() {
         <p>
           Nacovate · <a href={HOME} className="underline underline-offset-2 hover:text-stone-300">nacovate.com</a>
         </p>
-        <p>team@nacovate.com · +91 96503 13207</p>
+        <p>team@nacovate.com · +91 76781 01800</p>
       </div>
     </footer>
   )

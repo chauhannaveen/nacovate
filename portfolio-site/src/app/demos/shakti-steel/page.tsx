@@ -263,7 +263,7 @@ export default function ShaktiSteelDemo() {
       </section>
 
       <div className="sticky bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-white/10 bg-shakti-900/95 p-3 backdrop-blur lg:hidden">
-        <a href="tel:+919650313207" className="rounded bg-white/10 px-4 py-3.5 text-center text-sm font-bold text-white">
+        <a href="tel:+917678101800" className="rounded bg-white/10 px-4 py-3.5 text-center text-sm font-bold text-white">
           Call plant
         </a>
         <a href="#rfq" className="rounded bg-shakti-amber px-4 py-3.5 text-center text-sm font-bold text-shakti-900">

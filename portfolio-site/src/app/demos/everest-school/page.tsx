@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     'A demonstration website for a fictional CBSE school, built around published fees, a clear admission timeline and bus routes.',
 }
 
-const WHATSAPP = 'https://wa.me/919650313207'
+const WHATSAPP = 'https://wa.me/917678101800'
 
 const TIMELINE = [
   { d: '15 Nov', t: 'Forms open', b: 'Online and at the school office. ₹500, non-refundable.' },
@@ -309,7 +309,7 @@ export default function EverestSchoolDemo() {
       </section>
 
       <div className="sticky bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-everest-200 bg-everest-50/95 p-3 backdrop-blur lg:hidden">
-        <a href="tel:+919650313207" className="rounded-lg bg-everest-900 px-4 py-3.5 text-center text-sm font-semibold text-white">
+        <a href="tel:+917678101800" className="rounded-lg bg-everest-900 px-4 py-3.5 text-center text-sm font-semibold text-white">
           Call office
         </a>
         <a href={WHATSAPP} className="rounded-lg bg-everest-500 px-4 py-3.5 text-center text-sm font-semibold text-white">
