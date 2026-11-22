@@ -136,7 +136,17 @@ so those three carry the most weight — do them first if you are doing a partia
 
 ## Westbrook Family Medicine — US clinic (`demo/westbrook/`)
 
-Only if you decide to add a gallery here — this demo currently uses none.
+This demo has no gallery, so it has no `demo/westbrook/` folder. It does have a homepage
+Work tile, generated straight to 16:9 and kept only as `demo/tiles/westbrook-clinic.webp`:
+
+| File | Prompt |
+|------|--------|
+| `tiles/westbrook-clinic.webp` | Reception and waiting area of a modern American family medicine clinic, light oak and sage green, upholstered waiting chairs, check-in desk, potted plant, large windows with soft daylight, calm and uncluttered, wide interior shot, no people, **no signage, no lettering anywhere** |
+
+The signage clause is there because of The Arbour — see the third pitfall above. Asking
+for 16:9 up front also saved a crop, since the tile is the only place it is used.
+
+The table below is only if you decide to add a gallery here.
 
 | File | Prompt |
 |------|--------|

@@ -104,10 +104,10 @@ the demo originals. Pointing the cards straight at `demo/<slug>/hero-1.jpg` woul
 ~1.8 MB of 250 KB photographs on the homepage and undo the font work above. They are
 `loading="lazy"` and sit well below the fold, so they cost nothing until scrolled to.
 
-⚠️ **Westbrook has no tile and keeps its gradient**, because that demo has no gallery
-slots and so no photography was ever generated for it. The odd card out is honest rather
-than broken — fix it by generating a US family-practice shot, not by borrowing another
-demo's.
+All eight cards carry a photo. Westbrook's is the odd one: that demo has no gallery, so
+it has no `demo/westbrook/` folder — its waiting-room shot was generated for the tile
+alone and lives only in `demo/tiles/`. Its prompt is in `IMAGE-PROMPTS.md` all the same,
+which is what makes it reproducible without the source file being tracked.
 
 The gradient classes `shot-a` … `shot-h` are still there behind every tile; they show
 while the image loads and carry westbrook outright.
