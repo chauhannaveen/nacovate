@@ -8,12 +8,19 @@ export interface Listing {
   sqft: string
   status: 'For sale' | 'New' | 'Under offer'
   blurb: string
+  /**
+   * Filename in `demo/harlow/`, without the extension. Resolved to a path by the page
+   * (a server component) and passed into ListingExplorer, which is a client component
+   * and so cannot read the filesystem itself.
+   */
+  photo: string
 }
 
 /** All invented. Addresses use the 500-block range reserved for fiction. */
 export const listings: Listing[] = [
   {
     id: 'l1',
+    photo: 'prop-1',  // single-storey street, mature oaks — the shot the gallery above labels 412 Rowan Hill
     address: '412 Rowan Hill Drive',
     area: 'Cedar Park',
     price: '$585,000',
@@ -25,6 +32,7 @@ export const listings: Listing[] = [
   },
   {
     id: 'l2',
+    photo: 'prop-2',  // bright south-facing living room
     address: '88 Lattimer Court',
     area: 'Mueller',
     price: '$739,000',
@@ -36,6 +44,7 @@ export const listings: Listing[] = [
   },
   {
     id: 'l3',
+    photo: 'prop-3',  // kitchen taken back to brick
     address: '2207 Benning Street',
     area: 'East Austin',
     price: '$465,000',
@@ -47,6 +56,7 @@ export const listings: Listing[] = [
   },
   {
     id: 'l4',
+    photo: 'prop-5',  // two-storey house over a flat back yard
     address: '15 Orchard Bend',
     area: 'Round Rock',
     price: '$512,500',
@@ -58,6 +68,7 @@ export const listings: Listing[] = [
   },
   {
     id: 'l5',
+    photo: 'prop-4',  // bedroom — the only interior left, and nothing here shows a hillside build
     address: '930 Kestrel Way',
     area: 'Westlake',
     price: '$1,185,000',
@@ -69,6 +80,7 @@ export const listings: Listing[] = [
   },
   {
     id: 'l6',
+    photo: 'prop-6',  // quiet tree-lined cut-through
     address: '77 Pemberly Lane',
     area: 'South Lamar',
     price: '$398,000',

@@ -5,9 +5,16 @@ import { ReviewStrip, type Review } from '@/components/demo/ReviewStrip'
 import { photosFor } from '@/lib/photos'
 import { FeaturedProperty } from './FeaturedProperty'
 import { ListingExplorer } from './ListingExplorer'
+import { listings } from './listings'
 import { ValuationForm } from './ValuationForm'
 
 const img = photosFor('harlow')
+
+// Resolved here rather than inside ListingExplorer: that component is 'use client', and
+// photosFor reads the filesystem while the page is prerendered.
+const listingPhotos = Object.fromEntries(
+  listings.map((l) => [l.id, img(l.photo)]),
+) as Record<string, string | undefined>
 
 const REVIEWS: Review[] = [
   {
@@ -112,7 +119,7 @@ export default function HarlowVanceDemo() {
           </div>
         </div>
         <div className="mt-8">
-          <ListingExplorer />
+          <ListingExplorer photos={listingPhotos} />
         </div>
       </section>
 

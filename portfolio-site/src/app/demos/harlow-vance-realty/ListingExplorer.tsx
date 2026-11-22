@@ -4,12 +4,23 @@ import { useState } from 'react'
 import { DemoImage } from '@/components/demo/DemoImage'
 import { listings, STATUS_STYLE, type Listing } from './listings'
 
+/** Listing id -> resolved photo path. Built by the page; see the note there. */
+export interface ListingExplorerProps {
+  photos: Record<string, string | undefined>
+}
+
 const FILTERS = ['All', 'New', 'For sale', 'Under offer'] as const
 const SORTS = [
   { key: 'price-asc', label: 'Price: low to high' },
   { key: 'price-desc', label: 'Price: high to low' },
   { key: 'size', label: 'Largest first' },
 ] as const
+
+// Fallback art for a listing whose photo has not landed yet, picked to suit the
+// listing rather than its position in the grid.
+const MOTIFS: Record<string, 'house' | 'street' | 'room'> = {
+  l1: 'house', l2: 'room', l3: 'room', l4: 'house', l5: 'room', l6: 'street',
+}
 
 const toNumber = (money: string) => Number(money.replace(/[^0-9]/g, ''))
 const toSqft = (sqft: string) => Number(sqft.replace(/[^0-9]/g, ''))
@@ -22,7 +33,7 @@ function sortListings(rows: Listing[], key: (typeof SORTS)[number]['key']) {
   return sorted
 }
 
-export function ListingExplorer() {
+export function ListingExplorer({ photos }: ListingExplorerProps) {
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>('All')
   const [sort, setSort] = useState<(typeof SORTS)[number]['key']>('price-asc')
 
@@ -79,9 +90,16 @@ export function ListingExplorer() {
             className="group overflow-hidden rounded-2xl bg-white ring-1 ring-realty-200 transition hover:ring-realty-600/40"
           >
             <div className="relative">
+              {/*
+                Keyed on the listing, not on the render index. With `i` the placeholder
+                art changed every time the grid was re-sorted or filtered, because a row
+                that moved position picked up a different motif.
+              */}
               <DemoImage
-                motif={i % 3 === 0 ? 'house' : i % 3 === 1 ? 'street' : 'room'}
-                variant={i + 1}
+                src={photos[listing.id]}
+                label={listing.address}
+                motif={MOTIFS[listing.id] ?? 'house'}
+                variant={listing.id.charCodeAt(1)}
                 className="aspect-[4/3]"
               />
               <span

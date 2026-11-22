@@ -121,9 +121,15 @@ and a missing file keeps the placeholder. The filename is the contract — see t
 `IMAGE-PROMPTS.md`. Extensions `.jpg .jpeg .png .webp .avif` all resolve.
 
 That helper reads the filesystem at build time, so it **cannot be called from a
-`'use client'` module** — the listing-grid thumbnails in `ListingExplorer.tsx` are the one
-place still on placeholders for that reason. Pass a resolved string down as a prop if
-those ever need photos.
+`'use client'` module**. Where a client component needs photos, the server component
+resolves the paths and passes them down. `ListingExplorer.tsx` on harlow is the worked
+example: `listings.ts` carries a `photo` slot name per listing, `page.tsx` turns that into
+`listingPhotos` with `img()`, and the component takes it as a prop.
+
+⚠️ **Key that art on the listing, not on the render index.** Those thumbnails used
+`motif={i % 3 …}` and `variant={i + 1}`, so re-sorting or filtering the grid handed a row
+a different picture — the index moved even though the listing had not. Photos made it
+obvious; with placeholders it just looked like decoration shuffling.
 
 The demos link back to `/#work`. If that section is ever renamed, fix the links in the
 **source project** (`portfolio-site/src/components/demo/DemoFooter.tsx`), not in the generated HTML.
