@@ -14,6 +14,8 @@ See also `TODO.md` for the pending work list.
 | Path | Source of truth | Edit it? |
 |------|-----------------|----------|
 | `index.html` | **This repo.** Hand-written, inline `<style>`, no build step | ✅ Yes, edit directly |
+| `fonts/` | The eight `.woff2` faces `index.html` references | ✅ Yes, see Fonts |
+| `demo/tiles/` | 16:9 WebP crops for the homepage Work cards | ✅ Yes, see Work tiles |
 | `404.html`, `CNAME`, `.nojekyll`, `design/`, `*.md` | This repo | ✅ Yes |
 | `portfolio-site/` | **This repo.** Source of the generated pages — a Next.js 14 project | ✅ Yes, this is where you edit them |
 | `demos/`, `products/`, `_next/`, `demo/` | ❌ **Build output** of `portfolio-site/` | ❌ **Never edit by hand** |
@@ -91,6 +93,25 @@ lines of vanilla JS each. Do that before the demo set grows.
 | `/demos/everest-school/` | generated | Demo — Faridabad CBSE school (published fees, admission timeline, bus routes) |
 | `/demos/crestline-commercial/` | generated | Demo — US commercial leasing (availability table, floor plates, tours) |
 
+### The homepage Work tiles are a separate system
+
+The eight cards in `#work` on `index.html` do **not** go through `photos.ts` — that
+resolver only exists inside the Next project. They are plain `<img>` tags pointing at
+`demo/tiles/<demo-slug>.webp`, hand-written like the rest of that file.
+
+Those tiles are their own down-scaled 16:9 crops (900x506 WebP, roughly 65 KB each), not
+the demo originals. Pointing the cards straight at `demo/<slug>/hero-1.jpg` would put
+~1.8 MB of 250 KB photographs on the homepage and undo the font work above. They are
+`loading="lazy"` and sit well below the fold, so they cost nothing until scrolled to.
+
+⚠️ **Westbrook has no tile and keeps its gradient**, because that demo has no gallery
+slots and so no photography was ever generated for it. The odd card out is honest rather
+than broken — fix it by generating a US family-practice shot, not by borrowing another
+demo's.
+
+The gradient classes `shot-a` … `shot-h` are still there behind every tile; they show
+while the image loads and carry westbrook outright.
+
 Demo photography is **generated and in place for seven of the eight demos** (westbrook
 has no gallery). `IMAGE-PROMPTS.md` has the prompt that produced each file, plus a note on
 what generators get wrong. **Swapping one in is a file drop, not a code change:** every image slot resolves its
@@ -149,9 +170,35 @@ The Next project mirrors the dark-theme tokens in `tailwind.config.ts` under `in
 `ember`. If the brand copper changes here, change it there too or the generated pages
 drift out of brand.
 
-Archivo is embedded in `index.html` as base64 `@font-face`. That is why the file is
-~360 KB despite being 800 lines. Don't "optimise" it into an external request without
-checking the render-blocking trade-off first.
+### Fonts
+
+Eight faces — Archivo 600/700/800, IBM Plex Sans 400/500/600, IBM Plex Mono 500/600 —
+live as `.woff2` files in **`fonts/`** at the repo root, referenced by `@font-face` in
+`index.html`. Nothing else on the site uses them; the generated pages carry no
+`@font-face` at all.
+
+They used to be base64 inside the inline `<style>`, which is what made the homepage slow.
+The trade-off was measured rather than assumed:
+
+| | inline base64 | external `.woff2` |
+|---|---|---|
+| `index.html` | 461 KB | 106 KB |
+| over the wire | 304 KB | 26 KB |
+| `domInteractive` | 6.4 s | under 0.2 s |
+
+Base64 inflates binary by a third, and WOFF2 is already Brotli-compressed inside, so gzip
+could not claw any of it back — 461 KB of HTML only shrank to 304 KB. Being inline also
+made it render-blocking and uncacheable: GitHub Pages sends `Cache-Control: max-age=600`,
+so a visitor eleven minutes later paid for all 356 KB again.
+
+The render-blocking worry that justified inlining is handled instead by
+`font-display: swap` on every face (text paints immediately in the fallback) plus a
+`<link rel="preload">` for the **two** faces the first screen uses — Archivo 800 for the
+wordmark and hero, IBM Plex Sans 400 for body copy. ⚠️ **Don't preload all eight.** That
+rebuilds the same traffic jam, just with eight requests instead of one file.
+
+Archivo 700 is declared but no rule uses it. Harmless now — a browser only fetches a face
+something asks for — where inline it was 45 KB nobody needed on every single load.
 
 ---
 
