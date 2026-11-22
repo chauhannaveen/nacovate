@@ -1,7 +1,14 @@
 # Image prompts for the demo builds
 
-Every image on the demos is currently a drawn placeholder. Each one swaps to a real
-photo the moment a file exists at the right path — no code change, just a `src`.
+**Status: 50 of these are done.** Seven demos are fully photographed — aravali, shanti,
+harlow, ironside, shakti, everest and crestline. The prompts below are the ones that were
+actually used, so they are a record as much as a brief. Two sets of placeholders remain
+and neither is listed here: the three project cards on the aravali page, which have no
+filename assigned, and the listing-grid thumbnails on harlow, which are inside a
+`'use client'` component and so cannot call the resolver (see `portfolio-site/README.md`).
+
+Any image still missing stays a drawn placeholder, and swaps to a real photo the moment a
+file exists at the right path — no code change, just a `src`.
 
 Works with Midjourney, DALL·E, Imagen, Flux, Ideogram or any other generator.
 
@@ -11,9 +18,10 @@ Works with Midjourney, DALL·E, Imagen, Flux, Ideogram or any other generator.
 
 **Two steps. There is no code change.**
 
-1. Save the file under `portfolio-site/public/demo/<slug>/` **in this repo** —
-   `C:\Users\chauh\Documents\AI Apps\Nacovate\portfolio-site\public\demo\` — using the
-   exact slug and filename from the tables below, e.g. `…\demo\aravali\hero-1.jpg`.
+1. Save the file under `demo/<slug>/` **at the root of this repo** —
+   `C:\Users\chauh\Documents\AI Apps\Nacovate\demo\` — using the exact slug and filename
+   from the tables below, e.g. `…\Nacovate\demo\aravali\hero-1.jpg`. Not under
+   `portfolio-site/public/` — see that folder's `README.md` for why.
 2. Run `./sync-demos.sh` from the repo root, then commit and push.
 
 Every image slot on every demo is already wired to look for its file at build time
@@ -41,9 +49,24 @@ real person who never consented to being there, and some generators produce face
 enough to real people to cause trouble. Use backs of heads, hands, over-the-shoulder
 angles or empty rooms.
 
+**Two things generators reliably get wrong.** Both were hit on the first aravali batch:
+
+- **Text inside an image comes out garbled.** The first floor plan was captioned "3 BHK" by the
+  page but drew four bedrooms, labelled two of them "BEDROOM 3", had no BEDROOM 2, and printed
+  impossible dimensions (`17' 16-10"`, `35'-12"`). **Ask for no dimension text at all** and
+  check any room labels before accepting the file. The same applies to road names on maps.
+- **"A city map" means an American one unless you say otherwise.** The aravali map came back with
+  Oak Avenue, Maple Drive and Cedar Street on a demo captioned "Sector 63A". Name the country and
+  a couple of real local road names in the prompt. (That file was not wasted — it moved to
+  `harlow/map.jpg`, where an American suburb is exactly right. It still carries one "RIVE ROAD"
+  typo, invisible at the 190px it renders at.)
+
+Neither of these is legible at display size — nothing on the demo pages zooms — but a floor plan
+is the one thing a property prospect leans in on, so it is worth getting right.
+
 ---
 
-## Aravali Estates — Gurgaon property (`public/demo/aravali/`)
+## Aravali Estates — Gurgaon property (`demo/aravali/`)
 
 | File | Prompt |
 |------|--------|
@@ -52,10 +75,10 @@ angles or empty rooms.
 | `hero-3.jpg` | View from a high apartment balcony over a Gurgaon skyline at dusk, other residential towers in haze, warm city lights beginning to glow |
 | `hero-4.jpg` | Upscale residential clubhouse interior in India, double-height ceiling, rattan and wood furniture, indoor plants, soft daylight through tall windows, no people |
 | `hero-5.jpg` | Landscaped garden podium between modern residential towers, paved walking path, young trees, benches, early morning light, no people |
-| `floorplan.jpg` | Clean architectural floor plan drawing of a 3 BHK apartment, top-down 2D, thin black lines on white, room labels, dimension lines, no colour |
-| `map.jpg` | Stylised minimal city map illustration, muted beige and sage, labelled roads and a single copper location pin, flat vector style, no photorealism |
+| `floorplan.jpg` | Flat 2D architectural floor plan of a 3 bedroom apartment, viewed straight from directly above, thin black lines on plain white, no perspective, no desk, no paper edges or shadows, rooms labelled MASTER BEDROOM / BEDROOM 2 / BEDROOM 3 / LIVING / DINING / KITCHEN / BALCONY, **no dimension text** |
+| `map.jpg` | Stylised minimal map illustration of an **Indian** city sector, muted beige and sage, roads labelled with Indian names such as Golf Course Extension Road, Sector 63A and Dwarka Expressway, a single copper location pin, flat vector style, no photorealism |
 
-## Shanti Dental Care — Faridabad (`public/demo/shanti/`)
+## Shanti Dental Care — Faridabad (`demo/shanti/`)
 
 | File | Prompt |
 |------|--------|
@@ -67,7 +90,7 @@ angles or empty rooms.
 | `doctor-2.jpg` | Dentist's gloved hands holding a dental mirror and explaining a model of teeth on a desk, close crop, no face visible, bright daylight |
 | `map.jpg` | Stylised minimal map illustration of a dense Indian city sector, muted green and cream, labelled roads, one green location pin, flat vector style |
 
-## Harlow & Vance Realty — US (`public/demo/harlow/`)
+## Harlow & Vance Realty — US (`demo/harlow/`)
 
 | File | Prompt |
 |------|--------|
@@ -77,14 +100,14 @@ angles or empty rooms.
 | `prop-4.jpg` | Calm main bedroom, white linen bed, light wood floor, large window with garden view, minimal staging, morning light |
 | `prop-5.jpg` | Back garden of an American suburban home, mature oak shade, timber fence, lawn and patio furniture, late afternoon |
 | `prop-6.jpg` | Quiet residential street in a Texas suburb, mature trees both sides, sidewalk, parked cars, soft evening light |
-| `floorplan.jpg` | Clean architectural floor plan of a four-bedroom single-storey house, 2D top-down, thin black lines on white, labelled rooms |
+| `floorplan.jpg` | Flat 2D architectural floor plan of a four-bedroom single-storey house, viewed straight from directly above, thin black lines on plain white, no perspective, no desk or paper edges, labelled rooms, **no dimension text** |
 | `map.jpg` | Stylised minimal street map illustration of an American suburb, muted sage and cream, labelled roads, one dark-green location pin, flat vector style |
 | `agent.jpg` | Real estate agent's hands passing a set of house keys across a desk with a contract, close crop, no face visible, warm office light |
 
 `prop-1`, `prop-2` and `prop-6` also fill the three-image collage at the top of the page,
 so those three carry the most weight — do them first if you are doing a partial set.
 
-## Ironside Strength Co. — US gym (`public/demo/ironside/`)
+## Ironside Strength Co. — US gym (`demo/ironside/`)
 
 | File | Prompt |
 |------|--------|
@@ -93,7 +116,7 @@ so those three carry the most weight — do them first if you are doing a partia
 | `gym-3.jpg` | Conditioning area with rowing machines and assault bikes, concrete floor, warm overhead lights, empty, industrial aesthetic |
 | `gym-4.jpg` | Coach's hands adjusting a barbell on a lifter's back during a squat, close crop, no faces visible, gym lighting, shallow depth of field |
 
-## Westbrook Family Medicine — US clinic (`public/demo/westbrook/`)
+## Westbrook Family Medicine — US clinic (`demo/westbrook/`)
 
 Only if you decide to add a gallery here — this demo currently uses none.
 
@@ -103,7 +126,7 @@ Only if you decide to add a gallery here — this demo currently uses none.
 | `clinic-2.jpg` | Clean medical examination room, exam table with fresh paper, blood pressure cuff on the wall, bright and uncluttered, no people |
 
 
-## Shakti Steel & Fabrication — Faridabad (`public/demo/shakti/`)
+## Shakti Steel & Fabrication — Faridabad (`demo/shakti/`)
 
 | File | Prompt |
 |------|--------|
@@ -116,7 +139,7 @@ Only if you decide to add a gallery here — this demo currently uses none.
 | `work-2.jpg` | Welded steel conveyor frame assembly on trestles in a fabrication shop, unpainted mill finish, overhead lighting |
 | `work-3.jpg` | Perforated metal façade panels stacked on edge against a workshop wall, repeating hole pattern, raking side light |
 
-## Everest Public School — Faridabad (`public/demo/everest/`)
+## Everest Public School — Faridabad (`demo/everest/`)
 
 | File | Prompt |
 |------|--------|
@@ -127,7 +150,7 @@ Only if you decide to add a gallery here — this demo currently uses none.
 | `school-5.jpg` | Empty modern Indian classroom with desks in rows, whiteboard, ceiling fans, natural light from windows |
 | `route-map.jpg` | Stylised minimal map illustration of Faridabad sectors with bus route lines in maroon and gold, flat vector style |
 
-## Crestline Commercial — US (`public/demo/crestline/`)
+## Crestline Commercial — US (`demo/crestline/`)
 
 | File | Prompt |
 |------|--------|
@@ -136,7 +159,7 @@ Only if you decide to add a gallery here — this demo currently uses none.
 | `bldg-3.jpg` | Empty open-plan office floor, exposed ceiling, polished concrete, floor-to-ceiling windows, no furniture |
 | `bldg-4.jpg` | Corporate conference room with long table, screen on the wall, glass partition, daylight, no people |
 | `bldg-5.jpg` | Rooftop terrace of an office building with seating, planters and a city view, golden hour |
-| `plate-low.jpg`, `plate-mid.jpg`, `plate-high.jpg` | Architectural floor plate drawing of a commercial office floor, 2D top-down, thin black lines on white, core and lifts marked, dimension lines |
+| `plate-low.jpg`, `plate-mid.jpg`, `plate-high.jpg` | Flat 2D architectural floor plate drawing of a commercial office floor, viewed straight from directly above, thin black lines on plain white, core and lifts marked, **no dimension text** |
 | `contact.jpg` | Hands on a desk beside a building brochure and a coffee cup, close crop, no face visible, warm office daylight — used as the leasing contact's 56px portrait, so crop tight |
 
 ---

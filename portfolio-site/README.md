@@ -50,7 +50,7 @@ any absolute link back to `nacovate.com`.
 | `src/components/site/` | The two pieces belonging to nacovate.com itself: the case-study body and the header/footer chrome the generated pages wear |
 | `src/lib/photos.ts` | Resolves demo photography at build time — see below |
 | `src/lib/case-study.ts` | All case-study copy, kept out of the markup so claims are easy to audit |
-| `public/demo/<slug>/` | Demo photography. Empty today; drop files in and rebuild |
+| `../demo/<slug>/` | Demo photography — in the repo above, **not** in `public/`. See `public/README.md` |
 
 ### There is no root page, on purpose
 
@@ -68,7 +68,8 @@ mistaken for a bug in the live site. If a page needs the site's chrome, it takes
 ### Demo photography
 
 Every image slot calls `photosFor(slug)` from `src/lib/photos.ts`, which checks
-`public/demo/<slug>/` on disk while the page is being prerendered. File present → the
+`../demo/<slug>/` on disk — the repo above this project — while the page is being
+prerendered. File present → the
 photo; file absent → the drawn placeholder the demos ship with. So adding photography is a
 file drop and a rebuild, with no code change, and partial sets are fine.
 

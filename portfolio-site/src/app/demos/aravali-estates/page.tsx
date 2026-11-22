@@ -190,7 +190,7 @@ export default function AravaliEstatesDemo() {
               <div className="mt-7 grid gap-5 sm:grid-cols-2">
                 <div>
                   <h3 className="text-lg font-bold">Floor plan</h3>
-                  <DemoImage src={img('floorplan')} motif="plan" variant={5} className="mt-3 aspect-[4/3] rounded-xl ring-1 ring-aravali-200" label="3 BHK — Type A" />
+                  <DemoImage src={img('floorplan')} motif="plan" variant={5} className="mt-3 aspect-[4/3] rounded-xl ring-1 ring-aravali-200" label="4 BHK — Type A" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold">Location</h3>

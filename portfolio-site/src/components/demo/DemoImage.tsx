@@ -23,7 +23,8 @@ const MOTIFS: Record<string, string> = {
 export interface DemoImageProps {
   /**
    * Path to a real image, relative to the site root — e.g. `/demo/aravali/hero.jpg`.
-   * Files live in `public/demo/<slug>/`. When absent, a drawn placeholder is shown,
+   * Files live in `demo/<slug>/` in the repo above this project, never in `public/`.
+   * When absent, a drawn placeholder is shown,
    * so the demos work before any photography exists and improve the moment it does.
    */
   src?: string

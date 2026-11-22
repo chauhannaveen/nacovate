@@ -2,8 +2,13 @@
 # tracked here on purpose — that is the whole point of it being in this repo — but its
 # dependencies and its build directories are not.
 #
-# What IS committed is the build OUTPUT, up at the repo root: demos/, products/, _next/
-# and demo/. GitHub Pages serves this repo as-is, so those have to be in git.
+# What IS committed is the build OUTPUT, up at the repo root: demos/, products/ and
+# _next/. GitHub Pages serves this repo as-is, so those have to be in git.
+#
+# demo/ at the root is committed too but is NOT build output — it is the demo photography
+# itself, read in place at build time. It deliberately does not live in
+# portfolio-site/public/, which would make the export copy every photo into out/ and then
+# back up here, tracking all of them twice.
 portfolio-site/node_modules/
 portfolio-site/.next/
 portfolio-site/out/

@@ -24,9 +24,15 @@ from the LeadForge project folder in Nov 2026 so that the two are no longer enta
 so the demo source is actually version-controlled — it was in no repo at all before.
 
 ⚠️ **`demos/` and `demo/` are different things.** `demos/` is the eight demo *pages*;
-`demo/` is their *photography*, built from `portfolio-site/public/demo/<slug>/`. Both are
-wiped and rewritten by `./sync-demos.sh`, so a photo dropped straight into `demo/` here is
-gone on the next sync — put it in `portfolio-site/public/demo/<slug>/` instead.
+`demo/` is their *photography*. `demos/` is wiped and rewritten by `./sync-demos.sh`;
+**`demo/` is not build output and that script never touches it.** It is source, read in
+place at build time by `portfolio-site/src/lib/photos.ts`, so a photo goes straight into
+`demo/<slug>/` here and stays.
+
+⚠️ **Not into `portfolio-site/public/`.** Anything under `public/` is copied into `out/` by
+the export and then copied back up here, so every photo would be tracked twice and the repo
+would carry them at double size. `sync-demos.sh` warns if it finds files there. Same
+reasoning as `media/video/`, which sits at the root for exactly this reason.
 
 `portfolio-site/node_modules`, `.next` and `out` are gitignored; everything else under it
 is tracked. **This repo is served by GitHub Pages as-is**, so the tracked source is also
@@ -85,10 +91,11 @@ lines of vanilla JS each. Do that before the demo set grows.
 | `/demos/everest-school/` | generated | Demo — Faridabad CBSE school (published fees, admission timeline, bus routes) |
 | `/demos/crestline-commercial/` | generated | Demo — US commercial leasing (availability table, floor plates, tours) |
 
-Demo photography is drawn placeholders. `IMAGE-PROMPTS.md` has a generation prompt per
-file. **Swapping one in is a file drop, not a code change:** every image slot resolves its
+Demo photography is **generated and in place for seven of the eight demos** (westbrook
+has no gallery). `IMAGE-PROMPTS.md` has the prompt that produced each file, plus a note on
+what generators get wrong. **Swapping one in is a file drop, not a code change:** every image slot resolves its
 own path at build time through `src/lib/photos.ts` (`photosFor(slug)` → `img('hero-1')`),
-so a file at `portfolio-site/public/demo/<slug>/<name>` switches that slot to the photo
+so a file at `demo/<slug>/<name>` **at this repo's root** switches that slot to the photo
 and a missing file keeps the placeholder. The filename is the contract — see the tables in
 `IMAGE-PROMPTS.md`. Extensions `.jpg .jpeg .png .webp .avif` all resolve.
 
