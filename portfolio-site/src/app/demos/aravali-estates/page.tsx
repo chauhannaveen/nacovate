@@ -19,9 +19,13 @@ export const metadata: Metadata = {
 const WHATSAPP = 'https://wa.me/917678101800'
 
 const PROJECTS = [
-  { name: 'Verdant Heights', sector: 'Sector 63A', config: '3 & 4 BHK', price: '₹2.4 – 3.8 Cr', carpet: '1,840 – 2,610 sq ft', status: 'Under construction', possession: 'Dec 2027', rera: 'RC/REP/HARERA/GGM/2024/118', motif: 'skyline' as const },
-  { name: 'The Arbour', sector: 'Sector 58', config: '3 BHK + servant', price: '₹1.85 – 2.2 Cr', carpet: '1,610 – 1,790 sq ft', status: 'Ready to move', possession: 'Immediate', rera: 'RC/REP/HARERA/GGM/2021/064', motif: 'house' as const },
-  { name: 'Lakewood Residences', sector: 'Sector 84', config: '2 & 3 BHK', price: '₹1.1 – 1.6 Cr', carpet: '980 – 1,420 sq ft', status: 'Nearing possession', possession: 'Aug 2026', rera: 'RC/REP/HARERA/GGM/2022/091', motif: 'skyline' as const },
+  // `photo` is the demo/aravali/ filename, named rather than indexed so reordering this
+  // list carries each photo with its project. Verdant Heights deliberately reuses
+  // `hero-1`: it is the project the featured section below is about, and the gallery
+  // there is its photography — a different tower on the card would contradict it.
+  { name: 'Verdant Heights', photo: 'hero-1', sector: 'Sector 63A', config: '3 & 4 BHK', price: '₹2.4 – 3.8 Cr', carpet: '1,840 – 2,610 sq ft', status: 'Under construction', possession: 'Dec 2027', rera: 'RC/REP/HARERA/GGM/2024/118', motif: 'skyline' as const },
+  { name: 'The Arbour', photo: 'project-arbour', sector: 'Sector 58', config: '3 BHK + servant', price: '₹1.85 – 2.2 Cr', carpet: '1,610 – 1,790 sq ft', status: 'Ready to move', possession: 'Immediate', rera: 'RC/REP/HARERA/GGM/2021/064', motif: 'house' as const },
+  { name: 'Lakewood Residences', photo: 'project-lakewood', sector: 'Sector 84', config: '2 & 3 BHK', price: '₹1.1 – 1.6 Cr', carpet: '980 – 1,420 sq ft', status: 'Nearing possession', possession: 'Aug 2026', rera: 'RC/REP/HARERA/GGM/2022/091', motif: 'skyline' as const },
 ]
 
 const REVIEWS: Review[] = [
@@ -135,7 +139,7 @@ export default function AravaliEstatesDemo() {
           {PROJECTS.map((p, i) => (
             <li key={p.name} className="flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-aravali-200">
               <div className="relative">
-                <DemoImage motif={p.motif} variant={i + 2} className="aspect-[4/3]" />
+                <DemoImage src={img(p.photo)} label={`${p.name}, ${p.sector}`} motif={p.motif} variant={i + 2} className="aspect-[4/3]" />
                 <span className={`absolute right-3 top-3 rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${STATUS_STYLE[p.status]}`}>
                   {p.status}
                 </span>

@@ -49,7 +49,7 @@ real person who never consented to being there, and some generators produce face
 enough to real people to cause trouble. Use backs of heads, hands, over-the-shoulder
 angles or empty rooms.
 
-**Two things generators reliably get wrong.** Both were hit on the first aravali batch:
+**Three things generators reliably get wrong.** All three were hit on an aravali batch:
 
 - **Text inside an image comes out garbled.** The first floor plan was captioned "3 BHK" by the
   page but drew four bedrooms, labelled two of them "BEDROOM 3", had no BEDROOM 2, and printed
@@ -61,8 +61,16 @@ angles or empty rooms.
   `harlow/map.jpg`, where an American suburb is exactly right. It still carries one "RIVE ROAD"
   typo, invisible at the 190px it renders at.)
 
-Neither of these is legible at display size — nothing on the demo pages zooms — but a floor plan
-is the one thing a property prospect leans in on, so it is worth getting right.
+- **A building gets its own invented name, in letters large enough to read.** The Arbour came
+  back with ORCHID HEIGHTS · SECTOR 62 on a nameplate by the gate, directly above a card reading
+  "The Arbour / Sector 58". Saying "no signage" in the prompt helps but does not always take, so
+  check the entrance and the boundary wall of every exterior shot. The cheap fix is a crop, not a
+  regeneration: the card slot is `object-cover`, so handing it a wider image loses nothing — the
+  browser shows the centre and crops the sides, and the sign strip can simply be cut off.
+
+None of these is legible at display size — nothing on the demo pages zooms — but a floor plan is
+the one thing a property prospect leans in on, and a name is the one thing a card contradicts, so
+both are worth getting right.
 
 ---
 
@@ -75,8 +83,18 @@ is the one thing a property prospect leans in on, so it is worth getting right.
 | `hero-3.jpg` | View from a high apartment balcony over a Gurgaon skyline at dusk, other residential towers in haze, warm city lights beginning to glow |
 | `hero-4.jpg` | Upscale residential clubhouse interior in India, double-height ceiling, rattan and wood furniture, indoor plants, soft daylight through tall windows, no people |
 | `hero-5.jpg` | Landscaped garden podium between modern residential towers, paved walking path, young trees, benches, early morning light, no people |
+| `project-arbour.jpg` | Completed mid-rise residential apartment building in Gurgaon, India, warm beige and terracotta facade, mature trees and established landscaping in front, paved residents' driveway, bright mid-morning daylight, wide architectural exterior shot, no people |
+| `project-lakewood.jpg` | Two newly finished cream and grey mid-rise residential towers in New Gurgaon, India, balconies on every floor, freshly laid paving and newly planted saplings in the foreground, clear daytime light, wide architectural exterior shot, no people, no cranes or scaffolding |
 | `floorplan.jpg` | Flat 2D architectural floor plan of a 3 bedroom apartment, viewed straight from directly above, thin black lines on plain white, no perspective, no desk, no paper edges or shadows, rooms labelled MASTER BEDROOM / BEDROOM 2 / BEDROOM 3 / LIVING / DINING / KITCHEN / BALCONY, **no dimension text** |
 | `map.jpg` | Stylised minimal map illustration of an **Indian** city sector, muted beige and sage, roads labelled with Indian names such as Golf Course Extension Road, Sector 63A and Dwarka Expressway, a single copper location pin, flat vector style, no photorealism |
+
+The three project cards carry a status badge and a price, so the picture has to agree with
+them. `project-arbour` is Ready to move, which is why it is mature and settled;
+`project-lakewood` is Nearing possession and the cheapest of the three, so it is finished but
+raw-edged and plainer. Verdant Heights has no card photo of its own — it reuses `hero-1`,
+because the featured section lower down *is* Verdant Heights and that gallery is its
+photography. Its badge reads Under construction while `hero-1` shows a finished tower; that
+is how under-construction projects are actually marketed, so it stays.
 
 ## Shanti Dental Care — Faridabad (`demo/shanti/`)
 
