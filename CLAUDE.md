@@ -14,7 +14,7 @@ See also `TODO.md` for the pending work list.
 | Path | Source of truth | Edit it? |
 |------|-----------------|----------|
 | `index.html` | **This repo.** Hand-written, inline `<style>`, no build step | ✅ Yes, edit directly |
-| `fonts/` | The eight `.woff2` faces `index.html` references | ✅ Yes, see Fonts |
+| `fonts/` | Sixteen `.woff2` files — eight faces, each split core/`-ext` | ✅ Yes, see Fonts |
 | `demo/tiles/` | 16:9 WebP crops for the homepage Work cards | ✅ Yes, see Work tiles |
 | `404.html`, `CNAME`, `.nojekyll`, `design/`, `*.md` | This repo | ✅ Yes |
 | `portfolio-site/` | **This repo.** Source of the generated pages — a Next.js 14 project | ✅ Yes, this is where you edit them |
@@ -205,6 +205,43 @@ rebuilds the same traffic jam, just with eight requests instead of one file.
 
 Archivo 700 is declared but no rule uses it. Harmless now — a browser only fetches a face
 something asks for — where inline it was 45 KB nobody needed on every single load.
+
+#### Subsetting, and the two glyphs that are missing
+
+Each face is **two files**: `<name>.woff2` holds the 96 characters index.html can show,
+`<name>-ext.woff2` holds accented Latin, the rest of the punctuation and currency blocks
+and a few symbols. Each `@font-face` declares its own `unicode-range`, so `-ext` downloads
+only if one of its characters ever appears. Today none does.
+
+| | | |
+|---|---|---|
+| full faces | 266 KB | what Google's CSS gave us |
+| subset, one file each | 214 KB | only 19% off — see below |
+| split, core only | **135 KB** | what a visitor downloads |
+
+⚠️ **These were never full font families.** They came from Google Fonts, which serves
+per-`unicode-range` subsets, so each was already its `latin` cut at ~230 glyphs. Subsetting
+dropped 19 of those; nearly all of the 19% came from `--desubroutinize`, not from removing
+characters. The real win was the split, because the ~96 accented Latin-1 letters are both
+unused and unsafe to delete outright — the next client name with an accent would render
+that one letter in a fallback face.
+
+⚠️ **Never hand-write a `unicode-range`.** Each one is read back from the built `.woff2`'s
+cmap. A range that claims a character the file lacks makes the browser pick that face,
+find no glyph, and fall back for that character alone — which looks exactly like nothing
+went wrong. Regenerate the files and the CSS together.
+
+**U+20B9 (₹) and U+2192 (`&rarr;`) are in none of these fonts**, and were not in the
+originals either: Google's `latin` subset omits both. They fall back to `system-ui`, as
+they always have. The rupee appears once, in a video mock-up caption; the arrow once, in
+the hero button. If either ever needs to match, the fix is a font that has the glyph, not
+a wider range — a range cannot conjure one.
+
+The scripts that produced all this (`charset.py` → `subset3.py` → `split3.py` →
+`verify_fonts.py`) were one-offs in a scratch directory and are **not** in the repo. They
+need `fonttools` and `brotli`. `verify_fonts.py` is the one worth recreating if the fonts
+are ever touched: it asserts every character the page can show is covered by every weight,
+and tells a regression apart from a glyph the source font never had.
 
 ---
 
