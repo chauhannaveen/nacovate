@@ -176,6 +176,51 @@ The Next project mirrors the dark-theme tokens in `tailwind.config.ts` under `in
 `ember`. If the brand copper changes here, change it there too or the generated pages
 drift out of brand.
 
+### The mobile menu
+
+Below 900px the header nav collapses behind a button (`#navToggle`). Until Nov 2026 there
+was no button at all — `.nav-links` was simply `display:none` under 900px and nothing
+replaced it, so every phone and every portrait tablet had exactly two header controls and
+the only navigation on the site was the footer, 28 phone screens down.
+
+**The panel is the desktop `<nav>`, restyled — not a copy of it.** Under 900px
+`.nav-links` becomes an absolutely-positioned block under the header; over 900px it is the
+inline row it always was. There is one link list in the markup, so a seventh section can
+never reach the desktop header and miss the phone menu. Do not "simplify" this into a
+separate `<nav class="mobile-nav">`.
+
+Three details that are each load-bearing:
+
+- **The closed panel is `visibility:hidden`, not `display:none`.** `display:none` cannot
+  animate; `opacity:0` alone would leave six invisible links in the tab order. The
+  `visibility` transition is delayed by the fade duration on the way out so the panel only
+  vanishes once it has finished fading.
+- **`.site-header` is `position:sticky`, which makes it a positioned ancestor**, so the
+  panel's `top:100%` tracks the header down the page on its own. No second scroll listener.
+- **⚠️ `.nav-links a` is (0,1,1) and outranks a bare `.nav-cta`.** The in-panel button is
+  therefore selected as `.nav-links a.nav-cta`. With the lower-specificity selector the row
+  rule won and painted the label in `--ink` — dark text on copper in light mode, light text
+  on copper in dark, wrong in both and easy to miss. It takes `--_bg`/`--_fg` from `.btn`
+  rather than naming `--signal`/`--on-signal`, so a `.btn--*` variant would still paint it.
+
+**The header CTA leaves the row under 640px and reappears inside the panel** as `.nav-cta`.
+This is not a style preference: at 375px the row needs brand 130 + toggle 40 + CTA 140 +
+button 40 + gaps = 382px of a 345px content box, and the overflow gave the *whole site* a
+horizontal scrollbar (`document.body.scrollWidth` 400 against a 375 viewport). Something
+had to go and it could not be the menu button. The CTA is the one deliberately duplicated
+link on the page — both point at `#contact`. One button duplicated is a risk worth taking;
+six nav links duplicated is not, which is why the list above is shared.
+
+Closing is wired four ways — the button, a link (every destination is a same-page anchor,
+so without this the panel would sit on top of the section just jumped to), Escape (which
+returns focus to the button), and a click outside the header. A `matchMedia` listener also
+clears the open state when the viewport crosses 900px, so `aria-expanded="true"` is never
+left on a button nobody can see. ⚠️ **That last one cannot be tested in a devtools-style
+emulated viewport** — resizing by emulation fires neither `resize` nor `matchMedia`
+`change` (verified: zero events across a 1280 → 375 change). Test it by resizing a real
+window. It is belt-and-braces in any case: over 900px the CSS ignores `.nav-open`
+entirely, so a stale class changes nothing on screen.
+
 ### Fonts
 
 Eight faces — Archivo 600/700/800, IBM Plex Sans 400/500/600, IBM Plex Mono 500/600 —

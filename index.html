@@ -193,9 +193,69 @@ img,svg{display:block;max-width:100%;}
   :root:not([data-theme="light"]) .theme-toggle .sun{display:none;}
 }
 .header-cta{padding:.55rem .95rem;font-size:.88rem;}
-@media (max-width:359px){.header-cta{display:none;}}
+/* The header CTA leaves the row on phones — it does not fit beside the menu button, and
+   the button cannot be the thing that goes. It reappears as .nav-cta inside the panel, so
+   nothing is lost; the two are the same destination and the only duplicated link here. */
+@media (max-width:639px){.header-cta{display:none;}}
+.nav-cta{display:none;}
+
+/* Mobile menu button. Same shape and tokens as .theme-toggle so the two read as a pair;
+   the icon swap mirrors that control's .sun/.moon trick rather than inventing a second
+   pattern. */
+.nav-toggle{width:40px;height:40px;border-radius:999px;border:1px solid var(--border-strong);
+  background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none;
+  transition:border-color .18s ease, color .18s ease;}
+.nav-toggle:hover{border-color:var(--signal);color:var(--signal-ink);}
+.nav-toggle svg{width:20px;height:20px;}
+.nav-toggle .close{display:none;}
+.site-header.nav-open .nav-toggle .close{display:block;}
+.site-header.nav-open .nav-toggle .open{display:none;}
+
+@media (max-width:899px){
+  /* The panel is .nav-links itself — the desktop nav, re-laid-out. Absolute against
+     .site-header, which is sticky and therefore already a positioned ancestor, so the
+     panel tracks the header down the page without a second scroll listener. */
+  .nav-links{position:absolute;top:100%;left:0;right:0;
+    display:flex;flex-direction:column;align-items:stretch;gap:0;
+    padding-block:.25rem .75rem;background:var(--bg);
+    border-bottom:1px solid var(--border);box-shadow:var(--shadow);
+    /* Closed state is laid out but hidden, not display:none, so it can animate.
+       visibility:hidden is what keeps it out of the tab order — opacity alone would
+       leave six invisible links focusable. The visibility transition is delayed on the
+       way out so it only disappears once the fade has finished. */
+    visibility:hidden;opacity:0;transform:translateY(-6px);pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease, visibility 0s linear .18s;}
+  .site-header.nav-open .nav-links{visibility:visible;opacity:1;transform:none;
+    pointer-events:auto;transition-delay:0s;}
+  /* var(--pad) lines each row up with the wordmark above it. */
+  .nav-links a{padding:.9rem var(--pad);font-size:1.05rem;color:var(--ink);
+    border-top:1px solid var(--border);}
+  .nav-links a:first-child{border-top:0;}
+  .nav-links a:hover,.nav-links a:focus-visible{background:var(--surface-2);}
+}
+@media (max-width:639px){
+  /* The header CTA, relocated. Reset the row styling .nav-links a just applied to it. */
+  /* .nav-links a above sets colour and a row border on every anchor in the panel, and it
+     outspecifies .btn — which left the button's label painted in --ink, i.e. dark text on
+     orange in light mode and light text on orange in dark, wrong in both. Hand it back
+     .btn's own --_bg/--_fg rather than naming --signal/--on-signal here, so a future
+     .btn--* variant on this element still paints itself. */
+  /* Selector is .nav-links a.nav-cta, not .nav-cta: the row rule above is (0,1,1) and
+     outranks a lone class, which silently left the label painted in --ink — dark text on
+     orange in light mode, light text on orange in dark, wrong in both. Hand it back
+     .btn's own --_bg/--_fg rather than naming --signal/--on-signal here, so a future
+     .btn--* variant on this element still paints itself. */
+  .nav-links a.nav-cta{display:flex;justify-content:center;margin:.75rem var(--pad) 0;
+    padding:.85rem 1.4rem;font-size:1rem;border-top:0;color:var(--_fg);}
+  .nav-links a.nav-cta:hover,.nav-links a.nav-cta:focus-visible{background:var(--_bg);}
+}
+@media (prefers-reduced-motion: reduce){
+  .nav-links{transition:visibility 0s;}
+}
+
 @media (min-width:900px){
   .nav-links{display:flex;}
+  .nav-toggle{display:none;}
   .header-cta{padding:.85rem 1.4rem;font-size:1rem;}
 }
 
@@ -793,13 +853,14 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
       <span class="mark" aria-hidden="true"></span>
       Nacovate
     </a>
-    <nav class="nav-links" aria-label="Primary">
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
       <a href="#services">Services</a>
       <a href="#how">How it works</a>
       <a href="#video">Video</a>
       <a href="#work">Work</a>
       <a href="#products">Products</a>
       <a href="#contact">Contact</a>
+      <a class="btn nav-cta" href="#contact">Book a quick call</a>
     </nav>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
@@ -807,6 +868,11 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
       <a class="btn header-cta" href="#contact">Book a quick call</a>
+      <button class="nav-toggle" id="navToggle" type="button"
+              aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
     </div>
   </div>
 </header>
@@ -1555,6 +1621,40 @@ section{padding-block:clamp(3.75rem,8vw,6.5rem);}
   var onScroll = function(){ header.classList.toggle('is-stuck', window.scrollY > 8); };
   onScroll();
   window.addEventListener('scroll', onScroll, {passive:true});
+
+  // Mobile menu. The panel is the desktop <nav>, restyled under 900px, so there is one
+  // link list rather than two that can disagree. All of this is inert at desktop widths:
+  // the button is display:none, so it cannot be clicked or focused.
+  var navToggle = document.getElementById('navToggle');
+  var navLinks  = document.getElementById('navLinks');
+  function setNav(open){
+    header.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  if(navToggle && navLinks){
+    navToggle.addEventListener('click', function(){
+      setNav(!header.classList.contains('nav-open'));
+    });
+    // Every link here is a same-page anchor, so nothing navigates away — without this the
+    // panel would stay open on top of the section just jumped to.
+    navLinks.addEventListener('click', function(e){
+      if(e.target && e.target.closest && e.target.closest('a')) setNav(false);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && header.classList.contains('nav-open')){
+        setNav(false); navToggle.focus();
+      }
+    });
+    document.addEventListener('click', function(e){
+      if(header.classList.contains('nav-open') && !header.contains(e.target)) setNav(false);
+    });
+    // Rotating a phone or resizing past 900px with the panel open would otherwise leave
+    // aria-expanded="true" on a button nobody can see, which screen readers announce.
+    var wide = window.matchMedia('(min-width:900px)');
+    var onWide = function(m){ if(m.matches) setNav(false); };
+    wide.addEventListener ? wide.addEventListener('change', onWide) : wide.addListener(onWide);
+  }
 
   // Year
   var y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear();
